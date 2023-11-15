@@ -15,6 +15,7 @@ public class ThunderBolt extends SpecialMove {
       super.applyOppEffects(p);
       if (Main.chance(0.1)){
          Effect.paralyze(p);
+         
       }
    }
 

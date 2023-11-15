@@ -7,6 +7,7 @@ public class Shadow_Sneak extends PhysicalMove {
     public Shadow_Sneak(double pow,double acc){
     super(Type.GHOST, pow, acc); // 40 100 Как добавить приоритет 
    }
+   
 
    @Override
    protected String describe(){

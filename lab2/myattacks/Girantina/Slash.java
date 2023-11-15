@@ -13,7 +13,6 @@ public class Slash extends PhysicalMove {
     return 1d/8d;
   }
    
-
   @Override
   protected String describe(){
     String[] piece = this.getClass().toString().split("\\.");

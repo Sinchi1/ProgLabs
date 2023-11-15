@@ -1,7 +1,7 @@
 package bin;
 import Pokemons.*;
 import ru.ifmo.se.pokemon.Battle;
-import ru.ifmo.se.pokemon.Pokemon;
+// super метод вызова инициализации род класса 
 
 public class Main {
    /*
@@ -15,13 +15,25 @@ public class Main {
    public static void main(String[] args) {
 
    Battle b = new Battle();
-   Giratina giratina = new Giratina("Бобик", 0);
-   Pokemon p2 = new Pokemon("Хищник", 1);
+   Giratina giratina = new Giratina("", 1);
+   Remoraid remoraid = new Remoraid("", 1);
+   Octillery octillery = new Octillery("", 1);
+   Ralts ralts = new Ralts("", 1);
+   Gardevoir gardevoir = new Gardevoir("", 1);
+   Kirlia kirlia = new Kirlia("",1);
    b.addAlly(giratina);
-   b.addFoe(p2);
+   b.addFoe(octillery);
+   b.addAlly(ralts);
+   b.addFoe(remoraid);
+   b.addAlly(gardevoir);
+   b.addFoe(kirlia);
    b.go();
    }
    public static boolean chance(Double d){
       return d> Math.random();
+   
    } 
+   public static boolean Calcchance(Double d,double b){
+      return d/b> Math.random();
+   }
 } 

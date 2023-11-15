@@ -1,27 +1,24 @@
-package Moves;
-import bin.Main;
+package myattacks.Remoraid;
+
 import ru.ifmo.se.pokemon.Pokemon;
+import ru.ifmo.se.pokemon.SpecialMove;
+import bin.Main;
 import ru.ifmo.se.pokemon.Effect;
-import ru.ifmo.se.pokemon.PhysicalMove;
 import ru.ifmo.se.pokemon.Type;
 
-public class SampleMoves extends PhysicalMove{
-   public SampleMoves(double pow,double acc){
-    super(Type.NORMAL, pow, acc);
+public class Fire_Blast extends SpecialMove {
+   public Fire_Blast(double pow,double acc){
+    super(Type.FIRE, pow, acc); //110 85
    }
+
    @Override
    protected void applyOppEffects(Pokemon p){
       super.applyOppEffects(p);
       if (Main.chance(0.1)){
-         Effect.paralyze(p);
+         Effect.burn(p);
       }
    }
    
-   @Override
-   protected double calcCriticalHit(Pokemon att,Pokemon def){
-     return 1d/8d;
-   }
-
    @Override
    protected String describe(){
     String[] piece = this.getClass().toString().split("\\.");
@@ -30,3 +27,6 @@ public class SampleMoves extends PhysicalMove{
 
     
 }
+    
+    
+
