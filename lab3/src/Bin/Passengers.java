@@ -1,5 +1,7 @@
 package src.Bin;
-public class Passengers {
+import src.AbstractClasses.Character;
+
+public class Passengers extends Character {
 
     private String name;
 
@@ -37,4 +39,9 @@ public class Passengers {
     public String toString() {
     return "Character [name=" + name + "]";
 }
+
+    @Override
+    public void walk() {
+        System.out.println("Пассажиры идут");;
+    }
 }
