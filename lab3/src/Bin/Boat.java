@@ -1,31 +1,47 @@
 package src.Bin;
-import src.AbstractClasses.Entity;
+import src.AbstractClasses.Transport;
 
-public class Boat extends Entity {
-    
+
+
+public class Boat extends Transport {
+
+    private int capacity;
+
     private String name;
 
-    public Boat(String name){
+    public String PassengersOfBoat;
+
+    @Override
+    public String Checkcapacity(){
+     if (capacity > Passengers.getCount()){
+        return PassengersOfBoat = "Все пассажиры лодки";
+        
+     }
+     else{
+        return PassengersOfBoat = capacity + " Пассажиров лодки и " + (Passengers.getCount()-capacity)+ 
+        "плывущих рядом.";
+     }
+   }
+
+   public String getPassengerOfBoat(){
+    return PassengersOfBoat;
+   }
+    
+
+    public Boat(String name,int capacity){
         this.name = name;
+        this.capacity = capacity;
     }
 
     public Boat(){
         name = "Лодка";
+        capacity = 3;
     }
     
     public String getName() {
         return name;
     }
 
-    @Override
-    public void letlightthrough() {
-        System.out.println("Не пропускает света");
-    }
-
-    @Override
-    public void emitlight() {
-        System.out.println("Не испускает свет");
-    }
 
     @Override
     public int hashCode() {
@@ -49,6 +65,11 @@ public class Boat extends Entity {
     public String toString() {
     return "Character [name=" + name + "]";
 }
+
+    @Override
+    public void MovementMenthod() {
+        System.out.println("Плывёт по воде.");
+    }
 
    
 }

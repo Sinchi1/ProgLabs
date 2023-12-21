@@ -16,13 +16,13 @@ public class Swell extends Entity {
 
 
 @Override
-public void letlightthrough() {
-    System.out.println("Пропускает 10% света");
+public boolean letlightthrough() {
+    return false;
 }
 
 @Override
-public void emitlight() {
-    System.out.println("Не излучает свет");
+public boolean emitlight() {
+    return false;
 }
 
 

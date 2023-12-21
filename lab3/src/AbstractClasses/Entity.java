@@ -3,9 +3,9 @@ public abstract class Entity {
     private String name;
 
 
-    public abstract void letlightthrough();
+    public abstract boolean letlightthrough();
 
-    public abstract void emitlight();
+    public abstract boolean emitlight();
 
 
     public String getName(){

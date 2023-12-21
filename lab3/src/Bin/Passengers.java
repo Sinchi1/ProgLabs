@@ -1,47 +1,38 @@
 package src.Bin;
-import src.AbstractClasses.Character;
 
-public class Passengers extends Character {
+public class Passengers extends Human {
 
-    private String name;
+    public String name;
 
-    public Passengers(String name){
-        this.name = name;
+    private static int count = getLenght();
+
+
+    public Passengers(String name) {
+        super(name);
+        
     }
 
-    public Passengers(){
-        name = "Пассажиры";
-    }
-    
-    public String getName() {
-        return name;
+    public static int getCount() {
+        return count;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode(){
         int result = super.hashCode();
-        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        result = 31 * result + ((name != null) ? name.hashCode() :0);
         return result;
     }
-
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) return true;
-      if (!(obj instanceof Boat)) return false;
-
-      Passengers passengers = (Passengers) obj;
-
-      return name != null ? name.equals(passengers.name) : null;
-
+    public String toString(){
+    return "Имя персонажа " + name; 
     }
-
     @Override
-    public String toString() {
-    return "Character [name=" + name + "]";
-}
+    public boolean equals(Object obj){
+    if (this == obj) return true;
+    if (!(obj instanceof Passengers)) return false;
 
-    @Override
-    public void walk() {
-        System.out.println("Пассажиры идут");;
+    Passengers boat = (Passengers) obj;
+
+    return (name != null)? name.equals(boat.name) : false;
     }
 }

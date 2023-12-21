@@ -88,7 +88,7 @@ private String name;
             case island -> PlaceName2 = Places.island.getName();
             case horizont -> PlaceName2 = Places.horizont.getName();
         }
-        System.out.print(dist1+" "+ PlaceName2 + " Пламенел в лучах " + " "+ time1  +" "+ PlaceName + " ") ;
+        System.out.print(dist1+" "+ "на " + PlaceName2 + " Пламенел в лучах " +  time1  +" "+ PlaceName + " ") ;
     }
     // создать сущность закат ок да?
 
@@ -96,12 +96,12 @@ private String name;
         return name;
     }
     @Override
-    public void letlightthrough() {
-        System.out.println("Не пропускает");
+    public boolean letlightthrough() {
+        return false;
     }
     @Override
-    public void emitlight() {
-        System.out.println("Испускает свет");
+    public boolean emitlight() {
+        return true;
     }
 
     @Override

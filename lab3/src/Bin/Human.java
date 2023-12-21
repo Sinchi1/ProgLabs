@@ -1,19 +1,35 @@
 package src.Bin;
+
+import java.util.ArrayList;
+
 import src.AbstractClasses.Character;
 import src.Enums.Places;
+import src.Interfaces.BecameAble;
 import src.Interfaces.HumanAble;
 
-public class Human extends Character implements HumanAble {
-private String name;
+public class Human extends Character implements HumanAble , BecameAble {
+
+    private String name;
+
+    private static ArrayList<Human> Humans = new ArrayList<Human>();
+
 
     public  Human(String name){
-    // уууууээээ
+    Humans.add(this);
     this.name = name; 
     System.out.println("Создан " + name + " !");
 }
+    public static int getLenght(){
+        int result = Humans.size();
+        return result;
+    }
 
     public String getName() {
     return name;
+    }
+
+    public static ArrayList<Human> getNameall(){
+        return Humans;
     }
 
     @Override
@@ -77,6 +93,7 @@ private String name;
     @Override
     public String toString() {
     return "Character [name=" + name + "]";
+
 }
 
 }

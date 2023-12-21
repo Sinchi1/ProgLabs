@@ -14,13 +14,13 @@ public String getName() {
 }
 
 @Override
-public void letlightthrough() {
-    System.out.println("Пропускает свет");
+public boolean letlightthrough() {
+    return true;
 }
 
 @Override
-public void emitlight() {
-    System.out.println("Не является источником света");;
+public boolean emitlight() {
+    return false;
 }
 
 @Override

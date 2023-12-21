@@ -1,8 +1,6 @@
 
 import src.Bin.Boat;
-import src.Bin.Everything;
 import src.Bin.Human;
-import src.Bin.Passengers;
 import src.Bin.Sail;
 import src.Bin.Sun;
 import src.Bin.Swell;
@@ -23,19 +21,16 @@ public class Main {
 
         Swell swell = new Swell("зыбь");
         
-        Boat boat = new Boat();
-
-        Passengers passengers = new Passengers();
-
-        Everything everyrhing = new Everything(null);
+        Boat boat = new Boat("Лодка",8);
 
         Sail sail = new Sail();
 
+      
         Troll.getOff(Troll, Places.nose); Troll.sitNear(Troll, She); Sun.slope(Speeds.slow, Sun, Times.evening); 
         Sun.setColour(swell, Colors.Green, Colors.GoldenYellow);
-        everyrhing.became(everyrhing, Colors.GoldenYellow, boat, passengers, sail);
+        She.became(Colors.GoldenYellow, boat, sail);
         Sun.blazed(Times.evening, Sun, Places.island, Places.horizont, Disntance.far);
-        
+       
 
         
 
