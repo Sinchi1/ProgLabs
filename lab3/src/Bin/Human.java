@@ -13,16 +13,19 @@ public class Human extends Character implements HumanAble , BecameAble {
 
     private static ArrayList<Human> Humans = new ArrayList<Human>();
 
+    
 
     public  Human(String name){
     Humans.add(this);
     this.name = name; 
-    System.out.println("Создан " + name + " !");
+    System.out.println("Создан персонаж " + name + "!");
 }
-    public static int getLenght(){
+
+    public static int HumanCount(){
         int result = Humans.size();
         return result;
     }
+
 
     public String getName() {
     return name;

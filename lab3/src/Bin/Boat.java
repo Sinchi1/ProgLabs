@@ -1,4 +1,6 @@
 package src.Bin;
+import java.util.ArrayList;
+
 import src.AbstractClasses.Transport;
 
 
@@ -9,28 +11,42 @@ public class Boat extends Transport {
 
     private String name;
 
-    public String PassengersOfBoat;
+    //public String PassengersOfBoat;
+
+    public String PassangerOfBoat;
+
+    private  ArrayList<Passengers> PassengersOfBoat = new ArrayList<Passengers>();
+    
+    public  int count = 0;
+
+    public void attachPassanger(Passengers pas) {
+        PassengersOfBoat.add(pas);
+        System.out.println("Всего пассажиров в лодке:" + PassengersOfBoat.size() );
+        System.out.println("Мест осталось:" + (capacity - PassengersOfBoat.size()));
+    }
 
     @Override
     public String Checkcapacity(){
-     if (capacity > Passengers.getCount()){
-        return PassengersOfBoat = "Все пассажиры лодки";
+     if (capacity > PassengersOfBoat.size()){
+        return "Все пассажиры лодки";
         
      }
      else{
-        return PassengersOfBoat = capacity + " Пассажиров лодки и " + (Passengers.getCount()-capacity)+ 
+        return capacity + " Пассажиров лодки и " + (PassengersOfBoat.size()-capacity)+ 
         "плывущих рядом.";
      }
    }
 
-   public String getPassengerOfBoat(){
-    return PassengersOfBoat;
+   public int getcountPassengerOfBoat(){
+    return PassengersOfBoat.size();
    }
-    
+
+
 
     public Boat(String name,int capacity){
         this.name = name;
         this.capacity = capacity;
+        System.out.println("Создано место" + name + "!");
     }
 
     public Boat(){

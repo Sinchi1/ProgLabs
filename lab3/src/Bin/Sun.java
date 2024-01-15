@@ -13,7 +13,7 @@ private String name;
     public Sun(String name){
     // уууууээээ
     this.name = name; 
-    System.out.println("Создан " + name + " !");
+    System.out.println("Создан объект " + name + "!");
 }
     @Override
     public void slope(Speeds insertSpeed, Sun insertSun,Times insertTimes) {

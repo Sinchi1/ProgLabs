@@ -7,7 +7,7 @@ public class Swell extends Entity {
     public Swell(String name){
     // уууууээээ
     this.name = name; 
-    System.out.println("Создан " + name + " !");
+    System.out.println("Создан объект " + name + "!");
     }
      
     public String getName() {

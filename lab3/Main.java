@@ -1,6 +1,6 @@
 
 import src.Bin.Boat;
-import src.Bin.Human;
+import src.Bin.Passengers;
 import src.Bin.Sail;
 import src.Bin.Sun;
 import src.Bin.Swell;
@@ -13,9 +13,9 @@ import src.Enums.Times;
 
 public class Main {
     public static void main(String[] args){
-        Human Troll = new Human("Муми-Тролль");
+        Passengers Troll = new Passengers("Муми-Тролль");
 
-        Human She = new Human("Ней");
+        Passengers She = new Passengers("Ней");
         
         Sun Sun = new Sun("Солнышко");
 
@@ -25,6 +25,9 @@ public class Main {
 
         Sail sail = new Sail();
 
+        boat.attachPassanger(She);
+
+        boat.attachPassanger(Troll);
       
         Troll.getOff(Troll, Places.nose); Troll.sitNear(Troll, She); Sun.slope(Speeds.slow, Sun, Times.evening); 
         Sun.setColour(swell, Colors.Green, Colors.GoldenYellow);

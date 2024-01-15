@@ -1,6 +1,6 @@
 package src.Enums;
 public enum Speeds {
-slow("медленно"),normally("Нормально"),fast("Быстро");
+slow("Медленно"),normally("Нормально"),fast("Быстро");
 
 private String characterization;
 

@@ -4,7 +4,7 @@ import src.Bin.Sail;
 import src.Enums.Colors;
 
 public interface BecameAble {
-    default public void became(Colors inputcolour,Boat boat, Sail sail ){ 
+    default public void became(Colors inputcolour,Boat boat, Sail sail){ 
            String colour1 = "";
            String boat1 = boat.getName();
            String sail1 = sail.getName();

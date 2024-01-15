@@ -1,20 +1,28 @@
 package src.Bin;
 
+import java.util.ArrayList;
+
 public class Passengers extends Human {
 
     public String name;
 
-    private static int count = getLenght();
+    public Boat boat;
 
+    //private static int count = getPassengersCount();
+
+    private static ArrayList<Passengers> Passenger = new ArrayList<Passengers>();
+
+    public static int getPassengersCount(){
+        int result = Passenger.size();
+        return result;
+    }
 
     public Passengers(String name) {
         super(name);
+        Passenger.add(this);
         
     }
 
-    public static int getCount() {
-        return count;
-    }
 
     @Override
     public int hashCode(){
@@ -24,7 +32,7 @@ public class Passengers extends Human {
     }
     @Override
     public String toString(){
-    return "Имя персонажа " + name; 
+    return "Название лодки " + name; 
     }
     @Override
     public boolean equals(Object obj){
