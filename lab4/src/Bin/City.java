@@ -3,8 +3,10 @@ package src.Bin;
 import java.util.ArrayList;
 
 import src.Enums.Times;
+import src.Exceptions.TryException;
+import src.Interfaces.Attachtolocality;
 
-public class City {
+public class City implements Attachtolocality {
 
     private int population;
 
@@ -12,7 +14,16 @@ public class City {
 
     private Human mayor;
 
-    private static ArrayList<Citizen> populationList = new ArrayList<Citizen>();
+    private ArrayList<Citizen> populationList = new ArrayList<Citizen>();
+
+    public Citizen getCitizen(int x) throws TryException{
+        if (x > populationList.size()){
+            throw new TryException("Невозможный житель города!");
+        }
+        else{
+            return populationList.get(x);
+        }
+    }
 
     public void attachToCity(Human human){
         String cityName = this.getName();
@@ -20,6 +31,7 @@ public class City {
         Citizen cit = new Citizen(humanName);
         populationList.add(cit);
         population += 1;
+        cit.setCityName(cityName);
         System.out.println(humanName + " привязан к городу " + cityName +" Текущее население города:" + population);
     }
 
@@ -65,13 +77,41 @@ public class City {
         return populationList;
     }
 
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof City)) return false;
+
+      City human = (City) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
+    }
+    
+
     public class Citizen{
 
         private String name;
 
-        public void readNewsPapper(Human human, NewsPaper paper, Times time, boolean bool){
+        private String cityName;
+
+        private int populationcount = getPopulation();
+
+        public void readNewsPapper(Human human, NewsPaper paper, Times time){
             String humanName = human.getName();
-            String cityName = this.getName();
+            String cityName = populationList.get(populationcount-1).getCityName();
             String paperName = paper.getName();
             String timeName = "";
             switch (time) {
@@ -79,21 +119,19 @@ public class City {
                 case day -> timeName = Times.day.getTypeString();
                 case evening -> timeName = Times.evening.getTypeString();
             }
-            if (bool == true){
-                System.out.println(". Все " + population + " жителя " + cityName + " просыпаясь "+timeName+" сейчас же хватался за "+ paperName+", чтоб поскорей узнать какие-нибудь новости про "+ humanName);
-            }
-            else{
-                System.out.println(". Не каждый житель "+ cityName + "просыпаясь "+timeName+" сейчас же хватался за "+ paperName+", чтоб поскорей узнать какие-нибудь новости про "+ humanName);
-            }
+            System.out.print("Все " + population + " жителя " + cityName + " просыпаясь "+timeName+" сейчас же хватался за "+ paperName+", чтоб поскорей узнать какие-нибудь новости про "+ humanName);
     
         }
 
-        public void readNewsPapper(Human human, Place place, Place place2){
+        public void ComeToVisit(Human human, Place place, Place place2){
             String humanName = human.getName();
             String placeName = place.getName();
             String placeName2 = place2.getName();
-            System.out.println("Многие ходили к "+placeName+" и толклись там по целым дням, в надежде хоть краешком глаза увидеть "+humanName+", прибывшего из " + placeName2 + ". ");
+            System.out.print("Многие ходили к "+placeName+" и толклись там по целым дням, в надежде хоть краешком глаза увидеть "+humanName+", прибывшего из " + placeName2 );
     
+        }
+
+        public Citizen() {
         }
 
         public Citizen(String name) {
@@ -102,6 +140,39 @@ public class City {
 
         public String getName() {
             return name;
+        }
+
+        
+
+        @Override
+        public int hashCode() {
+            int result = super.hashCode();
+            result = 31 * result + ((name == null) ? 0 : name.hashCode());
+            return result;
+        }
+    
+        @Override
+        public boolean equals(Object obj) {
+          if (this == obj) return true;
+          if (!(obj instanceof Citizen)) return false;
+    
+          Citizen human = (Citizen) obj;
+    
+          return name != null ? name.equals(human.name) : null;
+    
+        }
+    
+        @Override
+        public String toString() {
+        return "Character [name=" + name + "]";
+        }
+
+        public void setCityName(String cityName) {
+            this.cityName = cityName;
+        }
+
+        public String getCityName() {
+            return cityName;
         }
     }
 }

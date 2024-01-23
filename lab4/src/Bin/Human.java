@@ -36,7 +36,7 @@ public class Human extends Character implements HumanAble {
     public void workWithTool(Dubina tool){
         String toolName = tool.getName();
         String humanName = this.getName();
-        System.out.print(humanName + " принялись работать своими " + toolName + ".");
+        System.out.print(humanName + " принялись работать своими " + toolName );
     }
 
     public void observate(){
@@ -56,8 +56,28 @@ public class Human extends Character implements HumanAble {
         String humanName = this.getName();
         String toolName = dubina.getName();
         String toolEffect = dubina.getEffect();
-        System.out.println(humanName+" уварачивались от " + toolEffect + " " + toolName + ".");
+        System.out.print(humanName+" уварачивались от " + toolEffect + " " + toolName );
     }
+
+    public  void pullOut(Place place){
+        String humanName = this.getName();
+        String placeName = place.getName();
+        System.out.print(humanName +  " вытаскивали за "+placeName+" все вещи которые у них были. ");
+    }
+
+    public void rollout(String string, Place place){
+        String humanName = this.getName();
+        String stringName = string;
+        String placeName = place.getName();
+        System.out.print("Последним из "+placeName+" выкатился "+humanName + " сидя на " + stringName);
+    }
+
+    public void threatsWorked(Human human){
+        String humanName1 = human.getName();
+        String humanName2 = this.getName();
+        System.out.print("Эти угрозы подействовали, и "+humanName2+" вынужден был согласиться на те условия, которые предложил "+ humanName1);
+    }
+
 
     public void photographed(Place place){
         class Car extends Entity{
@@ -86,7 +106,7 @@ public class Human extends Character implements HumanAble {
         name = this.getName();
         String carName = car.getName();
         String placeName = place.getName();
-        System.out.println(" " + name + " был сфотографирован в тот момент, когда он вылезал из "+carName+", и в тот момент, когда уже вылез, и в тот момент, когда появился в "+ placeName+ ". ");
+        System.out.print(" " + name + " был сфотографирован в тот момент, когда он вылезал из "+carName+", и в тот момент, когда уже вылез, и в тот момент, когда появился в "+ placeName);
     }
 
     public void callAngry(FunctionHumans fucn){
@@ -119,12 +139,6 @@ public class Human extends Character implements HumanAble {
         System.out.println("разозлившиеся "+tvwatchers+" стали звонить "+humanName+ " "+ funcName+" по "+telephoneName +"(по номеру:"+idName+") угрожая прекратить выплату взносов за пользование телевизорами.");
     }
 
-    public void threatsWorked(FunctionHumans fucn){
-        String humanName1 = this.getName();
-        String humanName2 = fucn.getName();
-        String inf = fucn.getFunction();
-        System.out.println("Эти угрозы подействовали, и "+humanName2+" "+inf+" вынужден был согласиться на те условия, которые предложил "+ humanName1);
-    }
 
 // Overrided methods from third lab
 

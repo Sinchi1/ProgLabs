@@ -1,10 +1,10 @@
-
-import Exceptions.UnderstandException;
+import src.Exceptions.TryException;
+import src.Exceptions.UnderstandException;
 import src.Bin.CandyStore;
 import src.Bin.City;
 import src.Bin.Dubina;
-import src.Bin.Function;
 import src.Bin.FunctionHumans;
+import src.Bin.Functions;
 import src.Bin.Haps;
 import src.Bin.Human;
 import src.Bin.NewsPaper;
@@ -17,12 +17,26 @@ import src.Enums.Times;
 
 
 public class Main {
+
+    @FunctionalInterface
+    public interface SetDots{
+        public void setDot();
+    }
     public static void main(String[] args){
+
+        SetDots dot = new SetDots() {
+            @Override
+            public void setDot(){
+                System.out.print(".");
+            }
+        };
 
         Haps Haps = new Haps();
     
         Human tvWatchers = new Human("Телезрители");
         
+        Human miga = new Human("Мига");
+
         Human korespor1 = new Human("Корреспонденты");
 
         Human korespor2 = new Human("Корреспондентки");
@@ -39,9 +53,9 @@ public class Main {
 
         Dubina Dubinka = new Dubina("Дубинок", null,"Электрических");
 
-        Function tvStudia = new Function("Телестудия");
+        Functions tvStudia = new Functions("Телестудия");
 
-        Function Police = new Function("Полиция");
+        Functions Police = new Functions("Полиция");
 
         FunctionHumans PoliceMan = new FunctionHumans("Полицейским",Police);
 
@@ -65,19 +79,39 @@ public class Main {
 
         davilonCity.attachToCity(funck);
 
-        davilonCity.attachToCity(teleOper);    
+        davilonCity.attachToCity(teleOper);  
 
-        Citizen inner = davilonCity.new Citizen("");
+        Citizen inner = davilonCity.new Citizen();
 
-        Haps.understand(true);
-        try {
-            Haps.understand(false);
-        } catch (UnderstandException e) {
+        
+        int count = davilonCity.getPopulation();
+        
+
+        try{
+            davilonCity.getCitizen(count-1);
+
+        }catch (TryException e){
+            throw new TryException("Невозможный житель города!");
+
         }
+
+
+
+        try {
+            Haps.understand(true); // True/False
+        } catch (UnderstandException e) {
+            
+            System.out.print(e);
+            System.out.println(Haps.getName() + " ничего не понял, и ничего не случилось...");
+            return;
+        }
+
 
         Haps.blink(PoliceMan, Door);
 
-        PoliceMan.workWithTool(Dubinkas);
+        PoliceMan.workWithTool(Dubinkas); 
+
+        dot.setDot();
 
         tvWatchers.observate();
 
@@ -85,31 +119,57 @@ public class Main {
 
         korespor1.dodgeFromSmth(Dubinka);
 
+        dot.setDot();
+
         funck.pullOut(komnata);
+
+        dot.setDot();
 
         teleOper.rollout("телекамера", komnata);
 
+        dot.setDot();
+
         paper.newsApper(Times.morning, davilonCity, neznaika);
+
+        dot.setDot();
 
         paper.appearance(neznaika);
 
         neznaika.photographed(ghostni4a);
 
+        dot.setDot();
+
         candyStore.soldOutKor();
+
+        dot.setDot();
 
         davilonCity.citybuzzed(Times.day);
 
-        inner.readNewsPapper(neznaika, paper, Times.morning, true);
+        dot.setDot();
 
-        inner.readNewsPapper(neznaika, ghostni4a, space);
+        inner.readNewsPapper(neznaika, paper, Times.morning);
+
+        dot.setDot();
+
+        inner.ComeToVisit(neznaika, ghostni4a, space);
+
+        dot.setDot();
 
         Haps.incomeRise(nomer, 2);
 
+        dot.setDot();
+
         Haps.sane(neznaika, MentalState.mad, MentalState.normal);
+
+        dot.setDot();
 
         Haps.dontAgreeToShow(neznaika);
 
         tvWatchers.callAngry(Vladelec);
+
+        Vladelec.threatsWorked(miga);
+
+        dot.setDot();
 
 
         

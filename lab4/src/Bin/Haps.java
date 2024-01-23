@@ -1,10 +1,11 @@
 package src.Bin;
 
-import Exceptions.UnderstandException;
+import src.Exceptions.*;
+import src.Interfaces.HapsAble;
 import src.AbstractClasses.Character;
 import src.Enums.MentalState;
 
-public class Haps extends Character {
+public class Haps extends Character implements HapsAble {
 
     private final String name = "Хапс";
 
@@ -56,13 +57,13 @@ public class Haps extends Character {
         System.out.print(name + " подмигнул стоящим у " + placeName + " " + policeName + ", ");
     }
 
-    public  void understand(boolean bool){ // Здесь будет первый try catch 
+    public  void understand(boolean bool) throws UnderstandException{ 
         String humanName = name;
         if (bool == true){
             System.out.print(humanName + " понял что его никто не слушается, ");
         }
         else{
-            throw new UnderstandException("Глупышка ничего не поняла");
+            throw new UnderstandException("");
         }
 
     }
@@ -71,11 +72,34 @@ public class Haps extends Character {
         String humanName = name;
         int intName = in;
         String placeName = place.getName();
-        System.out.println("Доходы господина "+humanName+" сразу увеличились в "+intName+" раза, так как он моментально повысил плату за " + placeName);
+        System.out.print("Доходы господина "+humanName+" сразу увеличились в "+intName+" раза, так как он моментально повысил плату за " + placeName);
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof Haps)) return false;
+
+      Haps human = (Haps) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
     }
 
     

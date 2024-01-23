@@ -4,8 +4,6 @@ import src.AbstractClasses.Entity;
 
 public class Dubina extends Entity {
 
-    // Тут будет класс полис инвентори и вложенный клас дубинка thumbs up
-
     private String name;
 
     private String material;
@@ -53,6 +51,29 @@ public class Dubina extends Entity {
     @Override
     public boolean emitlight() {
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof Dubina)) return false;
+
+      Dubina human = (Dubina) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
     }
 
 }  

@@ -1,8 +1,9 @@
 package src.Bin;
 
 import java.util.ArrayList;
+import src.Interfaces.FunctionHumansAble;
 
-public class FunctionHumans extends Human {
+public class FunctionHumans extends Human implements FunctionHumansAble {
 
     private static ArrayList<FunctionHumans> FunctionHumans = new ArrayList<FunctionHumans>();
 
@@ -10,7 +11,7 @@ public class FunctionHumans extends Human {
 
     private String function;
 
-    public FunctionHumans(String name, Function function) {
+    public FunctionHumans(String name, Functions function) {
         super(name);
         this.name = name;
         this.function = function.getName();
@@ -22,19 +23,28 @@ public class FunctionHumans extends Human {
         return result;
     }
 
-
+    @Override
     public  void pullOut(Place place){
         String humanName = this.getName();
         String functionName = this.getFunction();
         String placeName = place.getName();
-        System.out.print(humanName + ' ' + functionName + " вытаскивали за "+placeName+" все вещи которые у них были. ");
+        System.out.print(humanName + ' ' + functionName + " вытаскивали за "+placeName+" все вещи которые у них были");
     }
 
+    @Override
     public void rollout(String string, Place place){
         String humanName = this.getName();
         String stringName = string;
         String placeName = place.getName();
         System.out.print("Последним из "+placeName+" выкатился "+humanName + " сидя на " + stringName);
+    }
+
+    @Override
+    public void threatsWorked(Human human){
+        String humanName1 = human.getName();
+        String humanName2 = this.getName();
+        String inf = this.getFunction();
+        System.out.print("Эти угрозы подействовали, и "+humanName2+" "+inf+" вынужден был согласиться на те условия, которые предложил "+ humanName1);
     }
 
 

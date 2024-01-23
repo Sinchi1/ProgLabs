@@ -22,5 +22,28 @@ public class Place {
     public String getInformation() {
         return information;
     }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof Place)) return false;
+
+      Place human = (Place) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
+    }
 }
 

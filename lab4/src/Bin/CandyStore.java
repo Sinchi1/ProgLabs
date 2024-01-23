@@ -10,7 +10,6 @@ public class CandyStore {
 
     private Korshik korshik = new Korshik("Коржик");
 
-    private Candy candy = new Candy("Конфета Крокунов");
 
     public CandyStore(String name, Place location, int workerCount) {
         this.name = name;
@@ -30,14 +29,9 @@ public class CandyStore {
     public void soldOutKor(){
         String name = this.name;
         String candyName = korshik.getName();
-        System.out.print("В тот день "+name+ " продал весь свой запас "+ candyName + ". ");
+        System.out.print("В тот день "+name+ " продал весь свой запас "+ candyName );
     }
   
-    public void soldOutCandy(){
-        String name = this.name;
-        String candyName = candy.getName();
-        System.out.print("В тот день "+name+ " продал весь свой запас "+ candyName);
-    }
 
     public String getName() {
         return name;
@@ -51,7 +45,32 @@ public class CandyStore {
         return workerCount;
     }
 
-private class Korshik{
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof CandyStore)) return false;
+
+      CandyStore human = (CandyStore) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
+    }
+
+
+
+private class Korshik {
 
         private String name;
 
@@ -64,20 +83,5 @@ private class Korshik{
         }
 
     }
-
-private class Candy{
-
-        private String name;
-
-        public Candy(String name) {
-            this.name = name;
-        }
-
-
-        public String getName() {
-            return name;
-        }
-
-
-    }
 }
+

@@ -2,8 +2,9 @@ package src.Bin;
 
 import src.AbstractClasses.Entity;
 import src.Enums.Times;
+import src.Interfaces.NewsPaperAble;
 
-public class NewsPaper {
+public class NewsPaper implements NewsPaperAble{
 
     private String name;
 
@@ -25,7 +26,7 @@ public class NewsPaper {
             case day -> timeName = Times.day.getTypeString();
             case evening -> timeName = Times.evening.getTypeString();
         }
-        System.out.print(". На следующее "+timeName + " во всех " + name + " появилось сообщение "+information+" в " + cityname +" "+ humanName + ". " );
+        System.out.print(" На следующее "+timeName + " во всех " + name + " появилось сообщение "+information+" в " + cityname +" "+ humanName );
     }
 
     public void appearance(Human human){
@@ -64,6 +65,29 @@ public class NewsPaper {
 
     public String getInformation() {
         return information;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (!(obj instanceof NewsPaper)) return false;
+
+      NewsPaper human = (NewsPaper) obj;
+
+      return name != null ? name.equals(human.name) : null;
+
+    }
+
+    @Override
+    public String toString() {
+    return "Character [name=" + name + "]";
     }
 
 }
