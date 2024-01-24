@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.AbstractClasses.Character;
 import src.AbstractClasses.Entity;
+import src.AbstractClasses.Transport;
 import src.Interfaces.HumanAble;
 
 public class Human extends Character implements HumanAble {
@@ -80,7 +81,7 @@ public class Human extends Character implements HumanAble {
 
 
     public void photographed(Place place){
-        class Car extends Entity{
+        class Car extends Transport {
 
             private String name;
 
@@ -88,18 +89,16 @@ public class Human extends Character implements HumanAble {
                 this.name = name;
             }
 
-            @Override
-            public boolean letlightthrough() {
-                return false;
-            }
-
-            @Override
-            public boolean emitlight() {
-                return true;
-            }
 
             public String getName() {
                 return name;
+            }
+
+            @Override
+            public String MovementMenthod() {
+                return "Едет по земле";
+
+
             }
         }
         Car car = new Car("Автомашина");
@@ -109,35 +108,34 @@ public class Human extends Character implements HumanAble {
         System.out.print(" " + name + " был сфотографирован в тот момент, когда он вылезал из "+carName+", и в тот момент, когда уже вылез, и в тот момент, когда появился в "+ placeName);
     }
 
-    public void callAngry(FunctionHumans fucn){
+    public void callAngry(FunctionHumans fucn,Telephone telephone){
         String tvwatchers = this.getName();
         String humanName = fucn.getName();
         String funcName = fucn.getFunction();
-        class Telephone{
-            private String name;
-
-            private String id;
-
-            public String getName() {
-                return name;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public Telephone(String name, String id) {
-                this.name = name;
-                this.id = id;
-            }
-            
-
-        }
-        Telephone telephone = new Telephone("телефон","номер не указан");
         String telephoneName = telephone.getName();
         String idName = telephone.getId();
-        System.out.println("разозлившиеся "+tvwatchers+" стали звонить "+humanName+ " "+ funcName+" по "+telephoneName +"(по номеру:"+idName+") угрожая прекратить выплату взносов за пользование телевизорами.");
+        System.out.print("разозлившиеся "+tvwatchers+" стали звонить "+humanName+ " "+ funcName+" по "+telephoneName +"(по номеру:"+idName+") угрожая прекратить выплату взносов за пользование телевизорами.");
     }
+
+    public void runTo(Human human){
+        String name1 = human.getName();
+        String name = this.getName();
+        System.out.print("В результате все "+name+", которые имели еще достаточно сил, чтобы самостоятельно передвигаться, побежали к "+name1+",");
+    }
+
+    public void call(Telephone telephone){
+        String telephoneName = telephone.getName();
+        String id = telephone.getId();
+        System.out.print("принялись звонить ему по "+ telephoneName + " по номеру:" + id);
+    }
+
+    public void standInLine(Place place, Place place2){
+        String placeName = place.getName();
+        String placeName2 = place2.getName();
+        String humanName = this.getName();
+        System.out.print("У "+placeName2+" выстроилась очередь длиной во всю "+ placeName + " состоящия из " + humanName);
+    }
+    
 
 
 // Overrided methods from third lab

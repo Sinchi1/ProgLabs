@@ -9,11 +9,12 @@ import src.Bin.Haps;
 import src.Bin.Human;
 import src.Bin.NewsPaper;
 import src.Bin.Place;
+import src.Bin.Telephone;
 import src.Bin.City.Citizen;
 import src.Enums.MentalState;
 import src.Enums.Times;
 
-
+import java.util.Scanner;
 
 
 public class Main {
@@ -31,13 +32,20 @@ public class Main {
             }
         };
 
+        Scanner scanner = new Scanner(System.in);
+        int x = scanner.nextInt();
+
         Haps Haps = new Haps();
     
         Human tvWatchers = new Human("Телезрители");
         
         Human miga = new Human("Мига");
 
+        Human sickHuman = new Human("Больные");
+
         Human korespor1 = new Human("Корреспонденты");
+
+        Telephone telephone = new Telephone("телефон","номер не указан");
 
         Human korespor2 = new Human("Корреспондентки");
 
@@ -45,18 +53,26 @@ public class Main {
         
         Place Door = new Place("дверь");
 
+        Place shpicHome = new Place("Дом доктора Шприца");
+
+        Place xolStreat = new Place("Холерную улицу");
+
         Place komnata = new Place("Комната");
 
         Place nomer = new Place("гостиничная комната");
 
         Dubina Dubinkas = new Dubina("Дубинками");
 
-        Dubina Dubinka = new Dubina("Дубинок", null,"Электрических");
+        Dubina Dubinka = new Dubina("Дубинок", "Пластик","Электрических");
 
         Functions tvStudia = new Functions("Телестудия");
 
         Functions Police = new Functions("Полиция");
 
+        Functions Medic = new Functions("Больница");
+
+        FunctionHumans doctor = new FunctionHumans("Доктор Шприц", Medic);
+    
         FunctionHumans PoliceMan = new FunctionHumans("Полицейским",Police);
 
         FunctionHumans Vladelec = new FunctionHumans("Владелец", tvStudia);
@@ -88,7 +104,7 @@ public class Main {
         
 
         try{
-            davilonCity.getCitizen(count-1);
+            davilonCity.getCitizen(x);
 
         }catch (TryException e){
             throw new TryException("Невозможный житель города!");
@@ -98,7 +114,7 @@ public class Main {
 
 
         try {
-            Haps.understand(true); // True/False
+            Haps.understand(true);
         } catch (UnderstandException e) {
             
             System.out.print(e);
@@ -143,6 +159,20 @@ public class Main {
 
         dot.setDot();
 
+        paper.photoAppear(doctor);
+
+        doctor.inspect(neznaika);
+
+        sickHuman.runTo(doctor);
+        
+        sickHuman.call(telephone);
+
+        dot.setDot();
+
+        sickHuman.standInLine(xolStreat, shpicHome);
+
+        dot.setDot();
+
         davilonCity.citybuzzed(Times.day);
 
         dot.setDot();
@@ -165,24 +195,11 @@ public class Main {
 
         Haps.dontAgreeToShow(neznaika);
 
-        tvWatchers.callAngry(Vladelec);
+        tvWatchers.callAngry(Vladelec,telephone);
 
         Vladelec.threatsWorked(miga);
 
         dot.setDot();
-
-
-        
-
-
-
-        
-
-
-
-       
-
-        
 
         
     }    

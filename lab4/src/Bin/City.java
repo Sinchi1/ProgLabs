@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import src.Enums.Times;
 import src.Exceptions.TryException;
-import src.Interfaces.Attachtolocality;
+import src.Interfaces.CityAble;
 
-public class City implements Attachtolocality {
+public class City extends Place implements CityAble {
 
     private int population;
 
@@ -36,16 +36,20 @@ public class City implements Attachtolocality {
     }
 
     public City(String name, int population, Human mayor){
+        super(name);
         this.name = name;
         this.population = population;
         this.mayor = mayor;
     }
 
     public City(String name, int population){
+        super(name);
         this.name = name;
+        this.population = population;
     }
 
     public City(String name){
+        super(name);
         this.name = name;
     }
 
@@ -99,7 +103,9 @@ public class City implements Attachtolocality {
     public String toString() {
     return "Character [name=" + name + "]";
     }
-    
+
+
+
 
     public class Citizen{
 

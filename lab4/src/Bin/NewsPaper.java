@@ -29,6 +29,13 @@ public class NewsPaper implements NewsPaperAble{
         System.out.print(" На следующее "+timeName + " во всех " + name + " появилось сообщение "+information+" в " + cityname +" "+ humanName );
     }
 
+    public void photoAppear(FunctionHumans doctor){
+        String paperName = this.getName();
+        String doctorName = doctor.getName();
+        String factionName = doctor.getFunction();
+        System.out.print("В "+paperName+" была помещена также фотография "+doctorName+" "+factionName+", снятая как раз в тот момент,");
+    }
+
     public void appearance(Human human){
         class Suit extends Entity {
             private String suitName;

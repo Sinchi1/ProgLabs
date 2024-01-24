@@ -39,6 +39,12 @@ public class FunctionHumans extends Human implements FunctionHumansAble {
         System.out.print("Последним из "+placeName+" выкатился "+humanName + " сидя на " + stringName);
     }
 
+    public void inspect(Human human){
+        String doctorName = this.getName();
+        String humanName = human.getName();
+        System.out.print("когда "+doctorName+" осматривал "+humanName);
+    }
+
     @Override
     public void threatsWorked(Human human){
         String humanName1 = human.getName();

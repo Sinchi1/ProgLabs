@@ -2,7 +2,7 @@ package src.Bin;
 
 import src.AbstractClasses.Entity;
 
-public class Dubina extends Entity {
+public class Dubina extends Entity  {
 
     private String name;
 

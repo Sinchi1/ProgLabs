@@ -8,7 +8,7 @@ public class CandyStore {
 
     private int workerCount;
 
-    private Korshik korshik = new Korshik("Коржик");
+    private final Korshik korshik = new Korshik("Коржик");
 
 
     public CandyStore(String name, Place location, int workerCount) {
