@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<body>
+    <Movie1>
+    <id>"1"</id>
+    <name>"Крепкий Орешек"</name>
+    <creationdate>"0"</creationdate>
+        <coordinates>
+            <x>"15"</x>
+            <y>"17"</y>
+        </coordinates>
+    <oscarcount>"228"</oscarcount>
+    <goldenpalmcount>"16"</goldenpalmcount>
+    <lenght>"78"</lenght>
+    <movieGenre>"ACTION"</movieGenre>
+        <person>
+            <personName>"Grisha"</personName>
+            <height>"185"</height>
+            <eyecolor>"GREEN"</eyecolor>
+            <country>"VATICAN"</country>
+            <location>
+                <x>"176"</x>
+                <y>"25"</y>
+                <z>"45"</z>
+                <locationname>"USA"</locationname>
+            </location>
+        </person>
+    </Movie1>
+</body>
