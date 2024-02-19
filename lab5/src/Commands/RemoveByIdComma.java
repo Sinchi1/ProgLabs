@@ -12,9 +12,7 @@ public class RemoveByIdComma extends AbstractCommand {
 
     @Override
     public String execute(String args) {
-        int movieId = 0;
-        movieId = Integer.parseInt(args); // Try catch block
-        collectionManager.removeById(movieId);
+        collectionManager.removeById();
         return "Команда выполнена";
     }
 }

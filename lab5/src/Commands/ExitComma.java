@@ -7,6 +7,7 @@ public class ExitComma extends AbstractCommand{
 
     @Override
     public String execute(String args) {
-        return null;
+        System.exit(1);
+        return  null;
     }
 }

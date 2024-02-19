@@ -15,7 +15,7 @@ import Collections.*;
 
 public class CollectionManager {
 
-    private LocalDateTime creationDate;
+    public LocalDateTime creationDate;
 
     private LinkedList<Movie> moviesCollection;
 
@@ -51,9 +51,9 @@ public class CollectionManager {
             •	+ exit : завершить программу (без сохранения в файл)
             •	+ head : вывести первый элемент коллекции
             •	add_if_max {element} : добавить новый элемент в коллекцию, если его значение превышает значение наибольшего элемента этой коллекции
-            •	remove_lower {element} : удалить из коллекции все элементы, меньшие, чем заданный
-            •	remove_any_by_oscars_count oscarsCount : удалить из коллекции один элемент, значение поля oscarsCount которого эквивалентно заданному
-            •	filter_starts_with_name name : вывести элементы, значение поля name которых начинается с заданной подстроки
+            •	+ remove_lower {element} : удалить из коллекции все элементы, меньшие, чем заданный
+            •	+ remove_any_by_oscars_count oscarsCount : удалить из коллекции один элемент, значение поля oscarsCount которого эквивалентно заданному
+            •	+ filter_starts_with_name name : вывести элементы, значение поля name которых начинается с заданной подстроки
             •	+ print_field_ascending_genre : вывести значения поля genre всех элементов в порядке возрастания
             """;
     }
@@ -96,10 +96,13 @@ public class CollectionManager {
         // Дата создания
         ZonedDateTime creationDate1 = ZonedDateTime.now();
         // Количество Оскаров
+        System.out.println("Введите количество Оскаров");
         int oscarCount = scan.nextInt();
         // Количество goldenPalmCount
+        System.out.println("Введите количество золотых наград:");
         long goldenPalmCount = scan.nextLong();
         // Длина
+        System.out.println("Введите Длину фильма в часах:");
         long lenght = scan.nextLong();
         // Жанр Кино
         System.out.println("""
@@ -113,7 +116,6 @@ public class CollectionManager {
         String genreInput = scan.nextLine().toUpperCase();
         MovieGenre genre;
         genre = MovieGenre.valueOf(genreInput);
-        // Person blyatttttttttttttttttt
         // name
         System.out.println("Введите имя режиссёра:");
         String PersonName = scan.nextLine();
@@ -173,6 +175,20 @@ public class CollectionManager {
 
     }
 
+    //удалить из коллекции все элементы, меньшие, чем заданный
+    public void removeLower(){
+        Scanner scan = new Scanner(System.in);
+        int element = scan.nextInt();
+        Iterator<Movie> iter = moviesCollection.iterator();
+        int i = 0;
+        while (iter.hasNext()){
+            i++;
+            Movie mov = iter.next();
+            if (element > i){
+                iter.remove();
+            }
+        }
+    } // ПОД ОГРОМНЫМ ВОПРОСОМ
 
     public String clearCommand(){
         moviesCollection.clear();
@@ -194,15 +210,15 @@ public class CollectionManager {
     }
 
     public String ascedGenreCommand(){
-        Iterator<Movie> it = moviesCollection.iterator();
-        while (it.hasNext()){
-            Movie mov = it.next();
+        for (Movie mov : moviesCollection) {
             return mov.getGenre().toString();
         }
         return "";
     }
 
-    public void removeById(int id){
+    public void removeById(){
+        Scanner scan = new Scanner(System.in);
+        int id = scan.nextInt();
         Iterator<Movie> iter = moviesCollection.iterator();
         while (iter.hasNext()){
             Movie mov = iter.next();
@@ -215,5 +231,26 @@ public class CollectionManager {
 
     }
 
+    // filter_starts_with_name name : вывести элементы, значение поля name которых начинается с заданной подстроки
 
+    public String filterStartsWithName(){
+        Scanner scan = new Scanner(System.in);
+        String name = scan.nextLine();
+        ArrayList<Movie> names = new ArrayList<>();
+        int result = 0;
+        for (Movie mov : moviesCollection) {
+            if (mov.getName().equals(name)) {
+                result += 1;
+            }
+        }
+        return String.valueOf(result);
+    }
+
+    // remove_any_by_oscars_count oscarsCount : удалить из коллекции один элемент, значение поля oscarsCount которого эквивалентно заданному
+
+    public String removeOneOscar(){
+        Scanner scan = new Scanner(System.in);
+        int oscar = scan.nextInt();
+        return "bruh";
+    }
 }

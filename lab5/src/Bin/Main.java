@@ -1,20 +1,18 @@
 package Bin;
 
-import Commands.*;
 import Managers.CollectionManager;
 import Managers.CommandManager;
-import Managers.ProgrammRunner;
+import Managers.ProgramRunner;
+import Managers.XmlParser;
 
-import java.util.Scanner;
 
 public class Main {
 public static void main(String[] args){
     CommandManager commandManager = new CommandManager();
     CollectionManager collectionManager = new CollectionManager();
-    ProgrammRunner runner = new ProgrammRunner();
+    ProgramRunner runner = new ProgramRunner();
+    XmlParser xmlParser = new XmlParser();
 
-    runner.cmdAdd();
-
-    runner.run();
+    xmlParser.serializeCollection("");
 }
 }
