@@ -3,7 +3,7 @@
     <Movie1>
     <id>"1"</id>
     <name>"Крепкий Орешек"</name>
-    <creationdate>"00.00.00"</creationdate>
+    <creationdate>2019-02-22T11:37:58.074816+02:00</creationdate>
         <coordinates>
             <x>"15"</x>
             <y>"17"</y>

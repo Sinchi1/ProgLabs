@@ -1,9 +1,12 @@
 package Bin;
 
+import Collections.Movie;
 import Managers.CollectionManager;
 import Managers.CommandManager;
 import Managers.ProgramRunner;
 import Managers.XmlParser;
+
+import java.util.LinkedList;
 
 
 public class Main {
@@ -13,6 +16,9 @@ public static void main(String[] args){
     ProgramRunner runner = new ProgramRunner();
     XmlParser xmlParser = new XmlParser();
 
-    xmlParser.serializeCollection("");
+
+    runner.cmdAdd();
+
+    runner.run();
 }
 }
