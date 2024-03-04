@@ -19,6 +19,12 @@ public class ProgramRunner {
         commandManager.regCommand("exit", new ExitComma("Help", "Выводит инф"));
         commandManager.regCommand("save", new SaveComma("Help", "Выводит инф"));
         commandManager.regCommand("remove_by_id", new RemoveByIdComma("Help", "я натурал"));
+        commandManager.regCommand("head", new HeadComma("Help", "Выводит инф"));
+        commandManager.regCommand("print_genre", new PrintGenreComma("Help", "Выводит инф"));
+        commandManager.regCommand("remove_lower", new RemoveLowerComma("Help", "Выводит инф"));
+        commandManager.regCommand("remove_any_by_oscars_count", new RemoveOscarCountComma("Help", "Выводит инф"));
+        commandManager.regCommand("save", new SaveComma("Help", "Выводит инф"));
+        commandManager.regCommand("update_id", new UpdateIdComma("Help", "Выводит инф"));
     }
 
 
@@ -30,7 +36,7 @@ public class ProgramRunner {
                 if (!isFirstCom) {
                     System.out.print("Ваша команда:");
 
-                    String line = scan.nextLine();
+                    String line = scan.nextLine().trim();
 
                     String[] parts = line.split("\\s{1}", 2);
 
@@ -57,9 +63,8 @@ public class ProgramRunner {
 
                         String result = com.execute(commandArgument);
 
-                        com.execute(commandArgument);
-
                         System.out.println(result);
+
                     } else {
                         System.out.println("К сожалению введённой команды не существует! :(");
                     }

@@ -13,8 +13,8 @@ public class RemoveOscarCountComma extends AbstractCommand {
 
     @Override
     public String execute(String args) {
-        collectionManager.infoComma();
-        return "Команда выполнена";
+        collectionManager.removeOneOscar(args);
+        return "";
     }
 
 }

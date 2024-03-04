@@ -13,7 +13,7 @@ public class AddComma extends AbstractCommand {
     @Override
     public String execute(String args) {
         collectionManager.addCommand();
-        return "Команда выполнена";
+        return "bruh";
     }
 
 }

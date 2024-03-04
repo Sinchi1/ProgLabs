@@ -13,8 +13,8 @@ public class InfoComma extends AbstractCommand {
 
     @Override
     public String execute(String args) {
-        collectionManager.infoComma();
-        return "Команда выполнена";
+       return collectionManager.infoComma();
+
     }
 
 }

@@ -16,22 +16,12 @@ import Exceptions.ProgrammStateException;
 
 public class CollectionManager {
 
-    public LocalDateTime creationDate;
+    public ZonedDateTime creationDate = ZonedDateTime.now();
 
-    public LinkedList<Movie> moviesCollection = new LinkedList<>();
+    public static final LinkedList<Movie> moviesCollection = new LinkedList<>();
 
     public LinkedList<Movie> getMoviesCollection() {
         return moviesCollection;
-    }
-
-    public void setMoviesCollection(LinkedList<Movie> moviesCollection) {
-        this.moviesCollection = moviesCollection;
-    }
-
-
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
     }
 
     public String helpComma(){
@@ -59,7 +49,7 @@ public class CollectionManager {
     public String infoComma(){
         return "Тип коллекции:" + moviesCollection.getClass().getSimpleName()+ "\n" +
         "Дата создания:" + creationDate + "\n" +
-        "Количество элементов в коллекции:" + moviesCollection.size();
+        "Количество элементов в коллекции:" + getMoviesCollection().size();
     }
 
     public String showComma(){
@@ -83,6 +73,7 @@ public class CollectionManager {
     }
 
     public void addCommand(){
+        Movie mov1;
         Scanner scan = new Scanner(System.in);
         int id = moviesCollection.size() + 1 ;
         try {
@@ -143,11 +134,11 @@ public class CollectionManager {
                 }
             }
             // Длина
-            long lenght;
+            long length;
             while (true) {
                 System.out.println("Введите Длину фильма в часах:");
-                lenght = scan.nextLong();
-                if (lenght < 0) {
+                length = scan.nextLong();
+                if (length < 0) {
                     System.out.println("Значение не может быть меньше нуля!");
                     continue;
                 } else {
@@ -157,7 +148,7 @@ public class CollectionManager {
             // Жанр Кино
             MovieGenre genre;
             while (true) {
-                System.out.println("""
+                System.out.print("""
                         Выберите Жанр Кино:
                         ACTION,
                         DRAMA,
@@ -165,10 +156,11 @@ public class CollectionManager {
                         THRILLER,
                         SCIENCE_FICTION;
                         """);
-                String genreInput = scan.nextLine().toUpperCase();
+                scan.nextLine();
+                String genreInput =  scan.nextLine().toUpperCase();
                 genre = MovieGenre.valueOf(genreInput);
                 if (genre == null) {
-                    System.out.println("Поле не можеть быть равно null!");
+                    System.out.println("Поле не может быть равно null!");
                     continue;
                 } else {
                     break;
@@ -181,10 +173,8 @@ public class CollectionManager {
                 PersonName = scan.nextLine();
                 if (PersonName.isEmpty()) {
                     System.out.println("Вы ввели пустое имя, попробуйте снова!");
-                    continue;
                 } else if (PersonName == null) {
                     System.out.println("Строка не может быть null, попробуйте ещё раз!");
-                    continue;
                 } else {
                     break;
                 }
@@ -212,6 +202,7 @@ public class CollectionManager {
                             ORANGE,
                             WHITE;
                         """);
+                scan.nextLine();
                 String colorInput = scan.nextLine().toUpperCase();
                 col = Color.valueOf(colorInput);
                 if (col == null) {
@@ -221,6 +212,7 @@ public class CollectionManager {
                     break;
                 }
             }
+
             //Цвет волос режиссёра
             Color hairCol;
             while (true) {
@@ -270,6 +262,7 @@ public class CollectionManager {
             while (true) {
                 System.out.println("Введите название места:");
                 name = scan.nextLine();
+                name = scan.nextLine();
                 if (name.isEmpty()) {
                     System.out.println("Название места не может быть пустым!");
                     continue;
@@ -278,13 +271,18 @@ public class CollectionManager {
                 }
 
             }
+
             Location location = new Location(x, y, z, name);
 
             Person operator = new Person(name, height, col, hairCol, country, location);
 
-            // Сборка объекта коллекции!
+            mov1 = new Movie(id, filmName, cor, creationDate1, oscarCount, goldenPalmCount, length, genre, operator);
 
-            Movie mov1 = new Movie(id, filmName, cor, creationDate1, oscarCount, goldenPalmCount, lenght, genre, operator);
+            moviesCollection.add(mov1);
+
+            System.out.println("Вы успешно создали элемент коллекции! ^-^");
+
+            // Сборка объекта коллекции!
         }catch (ProgrammStateException e){
             System.out.println("Не предвиденная ошибка программы :(");
         }
@@ -322,7 +320,7 @@ public class CollectionManager {
     }
 
     public String headCommand(){
-        if (moviesCollection.size() == 0){
+        if (moviesCollection.isEmpty()){
             return "Дорогой пользователь, коллекция пуста => первого элемента не существует :)";
         }
         else{
@@ -337,9 +335,8 @@ public class CollectionManager {
         return "null";
     }
 
-    public void removeById(){
-        Scanner scan = new Scanner(System.in);
-        int id = scan.nextInt();
+    public void removeById(String args){
+        int id = Integer.parseInt(args);
         Iterator<Movie> iter = moviesCollection.iterator();
         while (iter.hasNext()){
             Movie mov = iter.next();
@@ -368,18 +365,17 @@ public class CollectionManager {
 
     // remove_any_by_oscars_count oscarsCount : удалить из коллекции один элемент, значение поля oscarsCount которого эквивалентно заданному
 
-    public String removeOneOscar(){
-        Scanner scan = new Scanner(System.in);
-        int oscar = scan.nextInt();
+    public void removeOneOscar(String args){
+        int oscar = Integer.parseInt(args);
         Iterator<Movie> iter = moviesCollection.iterator();
         while (iter.hasNext()){
             Movie mov = iter.next();
             if (mov.getOscarsCount() == oscar){
-                System.out.println("Элемент найден и удалён!");
+                iter.remove();
+                System.out.println("Элемент найден и удалён");
                 break;
             }
 
         }
-        return "Нету элементов с таким количеством оскаров";
     }
 }
