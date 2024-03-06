@@ -13,8 +13,8 @@ public class PrintGenreComma extends AbstractCommand  {
 
     @Override
     public String execute(String args) {
-        collectionManager.infoComma();
-        return "Команда выполнена";
+        collectionManager.ascedGenreCommand();
+        return "";
     }
 
 }

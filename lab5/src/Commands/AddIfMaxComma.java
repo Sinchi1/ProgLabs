@@ -14,7 +14,7 @@ public class AddIfMaxComma extends AbstractCommand  {
     @Override
     public String execute(String args) {
         collectionManager.infoComma();
-        return "Команда выполнена";
+        return "";
     }
 
 }

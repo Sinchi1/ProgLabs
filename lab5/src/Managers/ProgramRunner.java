@@ -2,7 +2,9 @@ package Managers;
 
 import Commands.*;
 import Exceptions.RunnerException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ProgramRunner {
@@ -25,6 +27,7 @@ public class ProgramRunner {
         commandManager.regCommand("remove_any_by_oscars_count", new RemoveOscarCountComma("Help", "Выводит инф"));
         commandManager.regCommand("save", new SaveComma("Help", "Выводит инф"));
         commandManager.regCommand("update_id", new UpdateIdComma("Help", "Выводит инф"));
+        commandManager.regCommand("execute_script", new ExecuteScript("",""));
     }
 
 
@@ -36,9 +39,15 @@ public class ProgramRunner {
                 if (!isFirstCom) {
                     System.out.print("Ваша команда:");
 
-                    String line = scan.nextLine().trim();
+                    String line = null;
 
-                    String[] parts = line.split("\\s{1}", 2);
+                    try {
+                        line = scan.nextLine().trim();
+                    } catch (NoSuchElementException e) {
+                        throw new RuntimeException("Введена запрещённая комбинация клавиш!");
+                    }
+
+                    String[] parts = line.split("\\s+", 2);
 
                     String commName = parts[0].toLowerCase();
 
@@ -50,8 +59,8 @@ public class ProgramRunner {
                             continue;
                         }
 
-                        if(!(commandManager.isHavingArgument(commName)) && (parts.length)>1){
-                            System.out.println("Вы перестарались и ввели лишний аргумент для команды! :)");
+                        if((commandManager.isHavingArgument(commName)) && (parts[1].split("\\s{1}",2)).length>1){
+                            System.out.println("Вы перестарались и ввели лишний аргумент для команды!");
                             continue;
                         }
 
@@ -66,7 +75,7 @@ public class ProgramRunner {
                         System.out.println(result);
 
                     } else {
-                        System.out.println("К сожалению введённой команды не существует! :(");
+                        System.out.println("К сожалению, введённой команды не существует!");
                     }
                 } else {
                     System.out.println("Для использования программы нужно знать команды, чтобы ознакомиться с ними" +
@@ -75,7 +84,9 @@ public class ProgramRunner {
                     isFirstCom = false;
                 }
             } catch (RunnerException e) {
-                System.exit(1); // Не очень понимаю как вызвать
+                return;
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
         }
     }

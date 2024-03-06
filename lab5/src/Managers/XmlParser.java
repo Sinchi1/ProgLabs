@@ -1,26 +1,61 @@
 package Managers;
 
-import Collections.Movie;
+import Collections.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class XmlParser {
 
-    public void serializeCollection(){
-        try {
-            XmlMapper xmlMapper = new XmlMapper();
-            xmlMapper.findAndRegisterModules();
-            File file = new File("Test.xml");
+    public LinkedList<Movie> movies;
+    public Movie movie;
 
+    CollectionManager collectionManager = new CollectionManager();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void deserializeCollection(String path) throws IOException {
+        ObjectMapper mapper = new XmlMapper();
+
+        mapper.findAndRegisterModules();
+
+        movies = mapper.readValue(new File("src/data/"
+                + path), new TypeReference<LinkedList<Movie>>() {
+        });
+
+        collectionManager.addMovie(movies);
 
     }
 
-    public void deSerializeCollection(String args){
+    public void SerializeCollection(String fileName) throws JsonProcessingException {
+        ObjectMapper mapper = new XmlMapper();
+
+        CollectionManager collectionManager = new CollectionManager();
+
+        String jsonStr;
+
+        mapper.findAndRegisterModules();
+
+        movies = collectionManager.getMoviesCollection();
+
+        jsonStr = mapper.writeValueAsString(movies);
+
+
+        try {
+
+            FileWriter writer = new FileWriter("src/data/"
+                    + fileName); // тут ещё путь нужно норм указывать
+            writer.write(jsonStr);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

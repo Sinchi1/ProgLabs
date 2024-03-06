@@ -13,8 +13,7 @@ public class FilterNameComma extends AbstractCommand  {
 
     @Override
     public String execute(String args) {
-        collectionManager.infoComma();
-        return "Команда выполнена";
+        return collectionManager.filterStartsWithName(args);
     }
 
 }

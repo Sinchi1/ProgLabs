@@ -13,7 +13,8 @@ public class ShowComma extends AbstractCommand {
 
     @Override
     public String execute(String args) {
-       return collectionManager.showComma();
+       collectionManager.showComma();
+       return "";
 
     }
 

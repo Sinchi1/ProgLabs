@@ -13,6 +13,6 @@ public class RemoveByIdComma extends AbstractCommand {
     @Override
     public String execute(String args) {
         collectionManager.removeById(args);
-        return "Команда выполнена";
+        return "";
     }
 }

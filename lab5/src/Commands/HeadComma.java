@@ -12,8 +12,7 @@ public class HeadComma extends AbstractCommand  {
 
     @Override
     public String execute(String args) {
-        collectionManager.headCommand();
-        return "Команда выполнена";
+        return collectionManager.headCommand();
     }
 
 

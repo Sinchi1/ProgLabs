@@ -1,6 +1,7 @@
 package Commands;
 
 import Managers.CollectionManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class SaveComma extends AbstractCommand {
 
@@ -12,9 +13,9 @@ public class SaveComma extends AbstractCommand {
     CollectionManager collectionManager = new CollectionManager();
 
     @Override
-    public String execute(String args) {
-        collectionManager.infoComma();
-        return "Команда выполнена";
+    public String execute(String args) throws JsonProcessingException {
+        collectionManager.save();
+        return "";
     }
 
 }

@@ -12,8 +12,7 @@ public class AddComma extends AbstractCommand {
 
     @Override
     public String execute(String args) {
-        collectionManager.addCommand();
-        return "bruh";
+        return collectionManager.addCommand(args);
     }
 
 }

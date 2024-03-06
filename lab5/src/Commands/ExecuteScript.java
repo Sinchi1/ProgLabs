@@ -2,18 +2,15 @@ package Commands;
 
 import Managers.CollectionManager;
 
-public class RemoveLowerComma extends AbstractCommand {
-
-    public RemoveLowerComma(String name, String description) {
+public class ExecuteScript extends AbstractCommand{
+    public ExecuteScript(String name, String description) {
         super(name, description);
-        //TODO Auto-generated constructor stub
     }
 
     CollectionManager collectionManager = new CollectionManager();
 
     @Override
     public String execute(String args) {
-        return collectionManager.infoComma();
+        return collectionManager.execute_script(args);
     }
-
 }

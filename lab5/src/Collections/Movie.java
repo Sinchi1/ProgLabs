@@ -1,19 +1,31 @@
 package Collections;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.time.ZonedDateTime;
+@JacksonXmlRootElement
 
 public class Movie {
+    @JacksonXmlProperty(localName = "id")
     private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    @JacksonXmlProperty(localName = "name")
     private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    @JacksonXmlProperty(localName = "coordinates")
+    private Coordinates coordinates; //Поле не может быть null@JacksonXmlProperty
+    @JacksonXmlProperty(localName = "creationdate")
+    public java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    @JacksonXmlProperty(localName = "oscarcount")
     private Integer oscarsCount; //Значение поля должно быть больше 0, Поле не может быть null
+    @JacksonXmlProperty(localName = "goldenpalmcount")
     private long goldenPalmCount; //Значение поля должно быть больше 0
+    @JacksonXmlProperty(localName = "lenght")
     private long length; //Значение поля должно быть больше 0
+    @JacksonXmlProperty(localName = "movieGenre")
     private MovieGenre genre; //Поле может быть null
+    @JacksonXmlProperty(localName = "person")
     private Person operator; //Поле может быть null
-    
-    
+
+
     public Movie(Integer id, String name, Coordinates coordinates, ZonedDateTime creationDate, Integer oscarsCount,
         long goldenPalmCount, long length, MovieGenre genre, Person operator) {
         this.id = id;
@@ -26,6 +38,8 @@ public class Movie {
         this.genre = genre;
         this.operator = operator;
     }
+
+    public Movie(){}
 
     public void setId(Integer id){
         this.id = id;
