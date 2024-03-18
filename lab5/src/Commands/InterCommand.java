@@ -8,5 +8,5 @@ public interface InterCommand {
 
     public String getName();
 
-    public String execute(String args) throws JsonProcessingException;
+    public void execute(String args) throws JsonProcessingException;
 }

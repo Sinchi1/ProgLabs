@@ -15,19 +15,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class CollectionManager {
 
-
+    ConsolePrinter consolePrinter = new ConsolePrinter();
     CommandManager commandManager = new CommandManager();
     public ZonedDateTime creationDate = ZonedDateTime.now();
     public static LinkedList<Movie> moviesCollection = new LinkedList<>();
 
-    private static int elementIp = 0;
+    private static int elementId;
 
     public LinkedList<Movie> getMoviesCollection() {
         return moviesCollection;
     }
 
-    public String helpComma() {
-        return """
+    public void helpComma() {
+        ConsolePrinter.messageToConsole("""
                 •	+ help : вывести справку по доступным командам
                 •	+ info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
                 •	+ show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
@@ -45,23 +45,23 @@ public class CollectionManager {
                 •	+ remove_any_by_oscars_count oscarsCount : удалить из коллекции один элемент, значение поля oscarsCount которого эквивалентно заданному
                 •	+ filter_starts_with_name name : вывести элементы, значение поля name которых начинается с заданной подстроки
                 •	+ print_field_ascending_genre : вывести значения поля genre всех элементов в порядке возрастания
-                """;
+                """);
     }
 
-    public String infoComma() {
-        return "Тип коллекции:" + moviesCollection.getClass().getSimpleName() + "\n" +
+    public void infoComma() {
+        ConsolePrinter.messageToConsole("Тип коллекции:" + moviesCollection.getClass().getSimpleName() + "\n" +
                 "Дата создания:" + creationDate + "\n" +
-                "Количество элементов в коллекции:" + getMoviesCollection().size();
+                "Количество элементов в коллекции:" + getMoviesCollection().size());
     }
 
     public void showComma() {
         ArrayList<String> result = new ArrayList<>();
         if (moviesCollection.isEmpty()) {
-            System.out.println("Дорогой пользователь, Коллекция пуста!");
+            ConsolePrinter.messageToConsole("Дорогой пользователь, Коллекция пуста!");
 
         } else {
             for (Movie movie : moviesCollection) {
-                System.out.print(movie.getName());
+                ConsolePrinter.messageToConsole("Название Фильма: "+movie.getName() +"\nid Фильма: " + movie.getId());
             }
         }
 
@@ -81,23 +81,23 @@ public class CollectionManager {
         }
 
         if (filmName == null){
-        System.out.println("Указанного id не существует!");
+            ConsolePrinter.messageToConsole("Указанного id не существует!");
             return;
         }
 
 
-        System.out.println(filmName);
+        ConsolePrinter.messageToConsole(filmName);
 
         Scanner scan = new Scanner(System.in);
         // Координаты
         Coordinates cor;
         while (true) {
-            System.out.println("Введите Координаты x:");
+            ConsolePrinter.messageToConsole("Введите Координаты x:");
             int intX = scan.nextInt();
-            System.out.println("Введите Координаты y:");
+            ConsolePrinter.messageToConsole("Введите Координаты y:");
             int intY = scan.nextInt();
             if (intX > 985) {
-                System.out.println("Координата X не должна быть больше 985, введите её ещё раз");
+                ConsolePrinter.messageToConsole("Координата X не должна быть больше 985, введите её ещё раз");
                 continue;
             } else {
                 cor = new Coordinates(intX, intY);
@@ -109,11 +109,10 @@ public class CollectionManager {
         // Количество Оскаров
         int oscarCount;
         while (true) {
-            System.out.println("Введите количество Оскаров");
+            ConsolePrinter.messageToConsole("Введите количество Оскаров");
             oscarCount = scan.nextInt();
             if (!(oscarCount > 0)) {
-                System.out.println("Количество оскаров должно быть положительным!");
-                continue;
+                ConsolePrinter.messageToConsole("Количество оскаров должно быть положительным!");
             } else {
                 break;
             }
@@ -122,11 +121,10 @@ public class CollectionManager {
         // Количество goldenPalmCount
         long goldenPalmCount;
         while (true) {
-            System.out.println("Введите количество золотых наград:");
+            ConsolePrinter.messageToConsole("Введите количество золотых наград:");
             goldenPalmCount = scan.nextLong();
             if (goldenPalmCount < 0) {
-                System.out.println("Число наград должно быть больше нуля!");
-                continue;
+                ConsolePrinter.messageToConsole("Число наград должно быть больше нуля!");
             } else {
                 break;
             }
@@ -134,35 +132,33 @@ public class CollectionManager {
         // Длина
         long length;
         while (true) {
-            System.out.println("Введите Длину фильма в часах:");
+            ConsolePrinter.messageToConsole("Введите Длину фильма в часах:");
             length = scan.nextLong();
             if (length < 0) {
-                System.out.println("Значение не может быть меньше нуля!");
-                continue;
+                ConsolePrinter.messageToConsole("Значение не может быть меньше нуля!");
             } else {
                 break;
             }
         }
         // Жанр Кино
-        MovieGenre genre;
+        MovieGenre genre = null;
         try {
             genre = null;
             while (true) {
-                System.out.print("""
-                        Выберите Жанр Кино:
-                        ACTION,
-                        DRAMA,
-                        ADVENTURE,
-                        THRILLER,
-                        SCIENCE_FICTION;
-                        """);
+                ConsolePrinter.messageToConsole("Выберите жанр кино:");
+
+                var E = MovieGenre.values();
+                for (var to: E){
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
+                }
+
                 scan.nextLine();
                 String genreInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (MovieGenre gen : MovieGenre.values()) {
                         if (gen.name().equals(genreInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             genre = MovieGenre.valueOf(genreInput);
                             flag = true;
                             break;
@@ -171,32 +167,28 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.print("""
-                            Выберите Жанр Кино:
-                            ACTION,
-                            DRAMA,
-                            ADVENTURE,
-                            THRILLER,
-                            SCIENCE_FICTION;
-                            """);
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите жанр кино:");
+                    E = MovieGenre.values();
+                    for (var to: E){
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
+                    }
+
                     genreInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         } catch (IllegalArgumentException e) {
-            return;
+            consolePrinter.messageToConsole( "Вами был указан несуществующий тип");
         }
 
         // name
         String PersonName;
         while (true) {
-            System.out.println("Введите имя режиссёра:");
+            ConsolePrinter.messageToConsole("Введите имя режиссёра:");
             PersonName = scan.nextLine();
             if (PersonName.isEmpty()) {
-                System.out.println("Вы ввели пустое имя, попробуйте снова!");
-            } else if (PersonName == null) {
-                System.out.println("Строка не может быть null, попробуйте ещё раз!");
+                ConsolePrinter.messageToConsole("Вы ввели пустое имя, попробуйте снова!");
             } else {
                 break;
             }
@@ -204,10 +196,10 @@ public class CollectionManager {
         // height
         Double height;
         while (true) {
-            System.out.println("Введите рост режиссёра:");
+            ConsolePrinter.messageToConsole("Введите рост режиссёра:");
             height = scan.nextDouble();
             if (height < 0) {
-                System.out.println("Рост должен быть больше нуля))");
+                ConsolePrinter.messageToConsole("Рост должен быть больше нуля))");
                 continue;
             } else {
                 break;
@@ -218,20 +210,18 @@ public class CollectionManager {
         Color col = null;
         try {
             while (true) {
-                System.out.println("""
-                            Выберите Цвет волос режиссёра:
-                            GREEN,
-                            YELLOW,
-                            ORANGE,
-                            WHITE;
-                        """);
+                ConsolePrinter.messageToConsole("Выберите Цвет волос режиссёра:");
+                var E = Color.values();
+                for (var to: E){
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
+                }
                 scan.nextLine();
                 String colorInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (Color color : Color.values()) {
                         if (color.name().equals(colorInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             col = Color.valueOf(colorInput);
                             flag = true;
                             break;
@@ -240,39 +230,34 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("""
-                                Выберите Цвет волос режиссёра :
-                                GREEN,
-                                YELLOW,
-                                ORANGE,
-                                WHITE;
-                            """);
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите Цвет волос режиссера");
+                    for (var to: E){
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
+                    }
                     colorInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         } catch (IllegalArgumentException e) {
-            return;
+            consolePrinter.messageToConsole( "Вами был указан несуществующий тип");
         }
 
         //Цвет волос режиссёра
         Color hairCol = null;
         try {
             while (true) {
-                System.out.println("""
-                            Выберите Цвет глаз режиссёра:
-                            GREEN,
-                            YELLOW,
-                            ORANGE,
-                            WHITE;
-                        """);
+                ConsolePrinter.messageToConsole("Выберите Цвет глаз режиссёра:");
+                var E = Color.values();
+                for (var to: E){
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
+                }
                 String hairColorInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (Color color : Color.values()) {
                         if (color.name().equals(hairColorInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             hairCol = Color.valueOf(hairColorInput);
                             flag = true;
                             break;
@@ -281,38 +266,33 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("""
-                                Выберите Цвет глаз режиссёра :
-                                GREEN,
-                                YELLOW,
-                                ORANGE,
-                                WHITE;
-                            """);
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите Цвет глаз режиссёра:");
+                    for (var to: E){
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
+                    }
                     hairColorInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         } catch (NullPointerException e) {
-            return;
+            consolePrinter.messageToConsole( "Вами был указан несуществующий тип");
         }
         // Национальность
         Country country = null;
         try {
             while (true) {
-                System.out.println("""
-                            Выберите Цвет волос режиссёра:
-                            FRANCE,
-                            CHINA,
-                            VATICAN,
-                            SOUTH_KOREA;
-                        """);
+                ConsolePrinter.messageToConsole("Выберите страну съёмки:");
+                var E = Country.values();
+                for (var to: E){
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
+                }
                 String countryInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (Country country1 : Country.values()) {
                         if (country1.name().equals(countryInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             country = Country.valueOf(countryInput);
                             flag = true;
                             break;
@@ -321,36 +301,33 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("""
-                                Выберите Цвет волос режиссёра:
-                                FRANCE,
-                                CHINA,
-                                VATICAN,
-                                SOUTH_KOREA;
-                            """);
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите страну съёмки:");
+                    for (var to: E){
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
+                    }
                     countryInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         }catch (IllegalArgumentException e){
-            return;
+            consolePrinter.messageToConsole( "Вами был указан несуществующий тип");
         }
 
         // лакейшн)
-        System.out.println("Введите координату x:");
+        ConsolePrinter.messageToConsole("Введите координату x:");
         Float x = scan.nextFloat();
-        System.out.println("Введите координату y:");
+        ConsolePrinter.messageToConsole("Введите координату y:");
         double y = scan.nextDouble();
-        System.out.println("Введите координату z:");
+        ConsolePrinter.messageToConsole("Введите координату z:");
         int z = scan.nextInt();
         String name;
         while (true) {
-            System.out.println("Введите название места:");
+            ConsolePrinter.messageToConsole("Введите название места:");
             name = scan.nextLine();
             name = scan.nextLine();
             if (name.isEmpty()) {
-                System.out.println("Название места не может быть пустым!");
+                ConsolePrinter.messageToConsole("Название места не может быть пустым!");
                 continue;
             } else {
                 break;
@@ -367,21 +344,21 @@ public class CollectionManager {
         moviesCollection.set(id,mov1);
     }
 
-    public String addCommand(String argument) {
+    public void addCommand(String argument) {
         Movie mov1;
         Scanner scan = new Scanner(System.in);
-        int id = elementIp + 1;
-        elementIp += 1;
+        int id = elementId + 1;
+        elementId += 1;
         String filmName = argument;
         // Координаты
         Coordinates cor;
         while (true) {
-            System.out.println("Введите Координаты x:");
+            ConsolePrinter.messageToConsole("Введите Координаты x:");
             int intX = scan.nextInt();
-            System.out.println("Введите Координаты y:");
+            ConsolePrinter.messageToConsole("Введите Координаты y:");
             int intY = scan.nextInt();
             if (intX > 985) {
-                System.out.println("Координата X не должна быть больше 985, введите её ещё раз");
+                ConsolePrinter.messageToConsole("Координата X не должна быть больше 985, введите её ещё раз");
                 continue;
             } else {
                 cor = new Coordinates(intX, intY);
@@ -393,11 +370,10 @@ public class CollectionManager {
         // Количество Оскаров
         int oscarCount;
         while (true) {
-            System.out.println("Введите количество Оскаров");
+            ConsolePrinter.messageToConsole("Введите количество Оскаров");
             oscarCount = scan.nextInt();
             if (!(oscarCount > 0)) {
-                System.out.println("Количество оскаров должно быть положительным!");
-                continue;
+                ConsolePrinter.messageToConsole("Количество оскаров должно быть положительным!");
             } else {
                 break;
             }
@@ -406,11 +382,10 @@ public class CollectionManager {
         // Количество goldenPalmCount
         long goldenPalmCount;
         while (true) {
-            System.out.println("Введите количество золотых наград:");
+            ConsolePrinter.messageToConsole("Введите количество золотых наград:");
             goldenPalmCount = scan.nextLong();
             if (goldenPalmCount < 0) {
-                System.out.println("Число наград должно быть больше нуля!");
-                continue;
+                ConsolePrinter.messageToConsole("Число наград должно быть больше нуля!");
             } else {
                 break;
             }
@@ -418,25 +393,24 @@ public class CollectionManager {
         // Длина
         long length;
         while (true) {
-            System.out.println("Введите Длину фильма в часах:");
+            ConsolePrinter.messageToConsole("Введите Длину фильма в часах:");
             length = scan.nextLong();
             if (length < 0) {
-                System.out.println("Значение не может быть меньше нуля!");
-                continue;
+                ConsolePrinter.messageToConsole("Значение не может быть меньше нуля!");
             } else {
                 break;
             }
         }
         // Жанр Кино
-        MovieGenre genre;
+        MovieGenre genre = null;
         try {
             genre = null;
             while (true) {
-                System.out.println("Выберите жанр кино:");
+                ConsolePrinter.messageToConsole("Выберите жанр кино:");
 
                 var E = MovieGenre.values();
                 for (var to: E){
-                    System.out.println(to);
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
                 }
 
                 scan.nextLine();
@@ -445,7 +419,7 @@ public class CollectionManager {
                 do {
                     for (MovieGenre gen : MovieGenre.values()) {
                         if (gen.name().equals(genreInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             genre = MovieGenre.valueOf(genreInput);
                             flag = true;
                             break;
@@ -454,11 +428,11 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("Выберите жанр кино:");
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите жанр кино:");
                     E = MovieGenre.values();
                     for (var to: E){
-                        System.out.println(to);
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
                     }
 
                     genreInput = scan.nextLine().toUpperCase();
@@ -466,18 +440,16 @@ public class CollectionManager {
                 break;
             }
         } catch (IllegalArgumentException e) {
-            return "Вы ввели неверный тип!";
+            ConsolePrinter.messageToConsole("Вы ввели неверный тип!");
         }
 
         // name
         String PersonName;
         while (true) {
-            System.out.println("Введите имя режиссёра:");
+            ConsolePrinter.messageToConsole("Введите имя режиссёра:");
             PersonName = scan.nextLine();
             if (PersonName.isEmpty()) {
-                System.out.println("Вы ввели пустое имя, попробуйте снова!");
-            } else if (PersonName == null) {
-                System.out.println("Строка не может быть null, попробуйте ещё раз!");
+                ConsolePrinter.messageToConsole("Вы ввели пустое имя, попробуйте снова!");
             } else {
                 break;
             }
@@ -485,10 +457,10 @@ public class CollectionManager {
         // height
         Double height;
         while (true) {
-            System.out.println("Введите рост режиссёра:");
+            ConsolePrinter.messageToConsole("Введите рост режиссёра:");
             height = scan.nextDouble();
             if (height < 0) {
-                System.out.println("Рост должен быть больше нуля))");
+                ConsolePrinter.messageToConsole("Рост должен быть больше нуля))");
                 continue;
             } else {
                 break;
@@ -499,10 +471,10 @@ public class CollectionManager {
         Color col = null;
         try {
             while (true) {
-                System.out.println("Выберите Цвет волос режиссёра:");
+                ConsolePrinter.messageToConsole("Выберите Цвет волос режиссёра:");
                 var E = Color.values();
                 for (var to: E){
-                    System.out.println(to);
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
                 }
                 scan.nextLine();
                 String colorInput = scan.nextLine().toUpperCase();
@@ -510,7 +482,7 @@ public class CollectionManager {
                 do {
                     for (Color color : Color.values()) {
                         if (color.name().equals(colorInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             col = Color.valueOf(colorInput);
                             flag = true;
                             break;
@@ -519,34 +491,33 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("Выберите Цвет волос режиссера");
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите Цвет волос режиссера");
                     for (var to: E){
-                        System.out.println(to);
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
                     }
                     colorInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         } catch (IllegalArgumentException e) {
-            return "Вами был указан несуществующий тип";
-        }
+            ConsolePrinter.messageToConsole("Вами был указан несуществующий тип");        }
 
         //Цвет волос режиссёра
         Color hairCol = null;
         try {
             while (true) {
-                System.out.println("Выберите Цвет глаз режиссёра:");
+                ConsolePrinter.messageToConsole("Выберите Цвет глаз режиссёра:");
                 var E = Color.values();
                 for (var to: E){
-                    System.out.println(to);
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
                 }
                 String hairColorInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (Color color : Color.values()) {
                         if (color.name().equals(hairColorInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             hairCol = Color.valueOf(hairColorInput);
                             flag = true;
                             break;
@@ -555,33 +526,33 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("Выберите Цвет глаз режиссёра:");
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите Цвет глаз режиссёра:");
                     for (var to: E){
-                        System.out.println(to);
+                        ConsolePrinter.messageToConsole(String.valueOf(to));
                     }
                     hairColorInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         } catch (NullPointerException e) {
-            return "Вами был указан несуществующий тип";
+            ConsolePrinter.messageToConsole("Вами был указан несуществующий тип");
         }
         // Национальность
         Country country = null;
         try {
             while (true) {
-                System.out.println("Выберите страну съёмки:");
+                ConsolePrinter.messageToConsole("Выберите страну съёмки:");
                 var E = Country.values();
                 for (var to: E){
-                    System.out.println(to);
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
                 }
                 String countryInput = scan.nextLine().toUpperCase();
                 boolean flag = false;
                 do {
                     for (Country country1 : Country.values()) {
                         if (country1.name().equals(countryInput)) {
-                            System.out.println("Строка соответствует одной из констант Enum");
+                            ConsolePrinter.messageToConsole("Строка соответствует одной из констант Enum");
                             country = Country.valueOf(countryInput);
                             flag = true;
                             break;
@@ -590,33 +561,32 @@ public class CollectionManager {
                     if (flag) {
                         break;
                     }
-                    System.out.println("Вы ввели несуществующий тип, попробуйте ещё раз!");
-                    System.out.println("Выберите страну съёмки:");
+                    ConsolePrinter.messageToConsole("Вы ввели несуществующий тип, попробуйте ещё раз!");
+                    ConsolePrinter.messageToConsole("Выберите страну съёмки:");
                 for (var to: E){
-                    System.out.println(to);
+                    ConsolePrinter.messageToConsole(String.valueOf(to));
                 }
                     countryInput = scan.nextLine().toUpperCase();
                 } while (!flag);
                 break;
             }
         }catch (IllegalArgumentException e){
-            return "Вы ввели неверный тип!";
-        }
+            ConsolePrinter.messageToConsole("Вами был указан несуществующий тип");        }
 
         // лакейшн)
-        System.out.println("Введите координату x:");
+        ConsolePrinter.messageToConsole("Введите координату x:");
         Float x = scan.nextFloat();
-        System.out.println("Введите координату y:");
+        ConsolePrinter.messageToConsole("Введите координату y:");
         double y = scan.nextDouble();
-        System.out.println("Введите координату z:");
+        ConsolePrinter.messageToConsole("Введите координату z:");
         int z = scan.nextInt();
         String name;
         while (true) {
-            System.out.println("Введите название места:");
+            ConsolePrinter.messageToConsole("Введите название места:");
             name = scan.nextLine();
             name = scan.nextLine();
             if (name.isEmpty()) {
-                System.out.println("Название места не может быть пустым!");
+                ConsolePrinter.messageToConsole("Название места не может быть пустым!");
                 continue;
             } else {
                 break;
@@ -632,7 +602,7 @@ public class CollectionManager {
 
         moviesCollection.add(mov1);
 
-        return "Вы успешно создали элемент коллекции!";
+        ConsolePrinter.messageToConsole("Вы успешно создали элемент коллекции!");
 
     }
 
@@ -654,27 +624,22 @@ public class CollectionManager {
         }
     }
 
-    public String clearCommand() {
+    public void clearCommand() {
         moviesCollection.clear();
-        return "Коллекция:" + moviesCollection.getClass().getSimpleName() + " Успешно очищена!";
+        ConsolePrinter.messageToConsole("Коллекция:" + moviesCollection.getClass().getSimpleName() + " Успешно очищена!");
     }
 
-    public void exitCommand() {
-        System.out.println("Программа успешно прекращена! (Без сохранения)");
-        System.exit(0);
-    }
-
-    public String headCommand() {
+    public void headCommand() {
         if (moviesCollection.isEmpty()) {
-            return "Дорогой пользователь, коллекция пуста => первого элемента не существует :)";
+            ConsolePrinter.messageToConsole("Дорогой пользователь, коллекция пуста => первого элемента не существует"); 
         } else {
-            return "Первый элемент коллекции:" + moviesCollection.get(0).getName();
+            ConsolePrinter.messageToConsole("Первый элемент коллекции:" + moviesCollection.get(0).getName());
         }
     }
 
     public void ascedGenreCommand() {
         if (moviesCollection.isEmpty()){
-            System.out.println("Коллекция пуста!");
+            ConsolePrinter.messageToConsole("Коллекция пуста!");
         }
         else {
             for (Movie mov : moviesCollection) {
@@ -690,21 +655,21 @@ public class CollectionManager {
             Movie mov = iter.next();
             if (mov.getId() == id) {
                 iter.remove();
-                System.out.println("Элемент удалён!");
+                ConsolePrinter.messageToConsole("Элемент удалён!");
                 return;
             }
 
         }
 
     }
-    public String filterStartsWithName(String argument) {
+    public void filterStartsWithName(String argument) {
         int result = 0;
         for (Movie mov : moviesCollection) {
             if (mov.getName().equals(argument)) {
                 result += 1;
             }
         }
-        return String.valueOf(result);
+        ConsolePrinter.messageToConsole(String.valueOf(result));
     }
     public void removeOneOscar(String args) {
         int oscar = Integer.parseInt(args);
@@ -713,7 +678,7 @@ public class CollectionManager {
             Movie mov = iter.next();
             if (mov.getOscarsCount() == oscar) {
                 iter.remove();
-                System.out.println("Элемент найден и удалён");
+                ConsolePrinter.messageToConsole("Элемент найден и удалён");
                 break;
             }
 
@@ -738,36 +703,38 @@ public class CollectionManager {
                             case "filter_starts_with_name" -> filterStartsWithName(argument);
                         }
                     } else if (words.length > 1 && !(commandManager.isHavingArgument(commandName))){
-                        System.out.println("В прочитанной команде находится лишний символ!");
+                        ConsolePrinter.messageToConsole("В прочитанной команде находится лишний символ!");
                         throw new RuntimeException();
                     }
                     else {
                         switch (commandName){
-                            case "help" -> System.out.println(helpComma());
-                            case "info" -> System.out.println(infoComma());
+                            case "help" -> helpComma();
+                            case "info" -> infoComma();
                             case "show" -> showComma();
-                            case "clear" -> System.out.println(clearCommand());
-                            //case "save" -> saveComma();
-                            case "head" -> System.out.println(headCommand());
+                            case "clear" -> clearCommand();
+                            case "save" -> save();
+                            case "head" -> headCommand();
                             case "print_field_ascending_genre" ->ascedGenreCommand();
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            System.out.println("Такого файла не существует!");
+            ConsolePrinter.messageToConsole("Такого файла не существует!");
             throw new RuntimeException(e);
         }
     return "";
     }
-
     public void save() throws JsonProcessingException {
         XmlParser xmlParser = new XmlParser();
-        xmlParser.SerializeCollection("Test.xml");
-        System.out.println("Файл сохранён!");
-        System.exit(1);
+        xmlParser.serializeCollection("Test.xml");
+        ConsolePrinter.messageToConsole("Файл сохранён!");
     }
-    public void addMovie(LinkedList<Movie> mov){
+    public void SetMoviesInCollection(LinkedList<Movie> mov){
         moviesCollection = mov;
+    }
+
+    public void setElementId(int id){
+        elementId = id;
     }
 }

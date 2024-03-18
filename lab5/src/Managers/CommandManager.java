@@ -17,7 +17,7 @@ public class CommandManager {
         return commandHashMap.get(name);
     }
 
-    public void regCommand(String commandName, AbstractCommand command){
+    public void registerCommand(String commandName, AbstractCommand command){
         commandHashMap.put(commandName,command);
     }
 

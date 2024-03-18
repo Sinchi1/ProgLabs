@@ -1,6 +1,8 @@
 package Managers;
 
 import Collections.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +11,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class XmlParser {
 
@@ -29,12 +29,22 @@ public class XmlParser {
                 + path), new TypeReference<LinkedList<Movie>>() {
         });
 
-        collectionManager.addMovie(movies);
+        int elId = 0;
+
+        for (Movie mov: movies){
+            elId = mov.getId();
+        }
+
+        collectionManager.SetMoviesInCollection(movies);
+
+        collectionManager.setElementId(elId);
 
     }
 
-    public void SerializeCollection(String fileName) throws JsonProcessingException {
+
+    public void serializeCollection(String fileName) throws JsonProcessingException {
         ObjectMapper mapper = new XmlMapper();
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
         CollectionManager collectionManager = new CollectionManager();
 
@@ -50,7 +60,7 @@ public class XmlParser {
         try {
 
             FileWriter writer = new FileWriter("src/data/"
-                    + fileName); // тут ещё путь нужно норм указывать
+                    + fileName);
             writer.write(jsonStr);
             writer.close();
         } catch (IOException e) {

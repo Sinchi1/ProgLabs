@@ -1,8 +1,8 @@
 package Exceptions;
 
 public class RunnerException extends RuntimeException {
-    public RunnerException(String mes){
-        super(mes);
+    public RunnerException(String message){
+        super(message);
 
     }
 }
