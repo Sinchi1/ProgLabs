@@ -13,60 +13,61 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * The class that parsing from java to xml
+ */
 public class XmlParser {
 
     public LinkedList<Movie> movies;
     public Movie movie;
 
-    CollectionManager collectionManager = new CollectionManager();
+    private static String path;
+
+    CollectionManager collectionManager;
 
     public void deserializeCollection(String path) throws IOException {
+        File file = new File(path);
+        setPath(path);
+        collectionManager = CollectionManager.getInstance();
         ObjectMapper mapper = new XmlMapper();
-
         mapper.findAndRegisterModules();
-
-        movies = mapper.readValue(new File("src/data/"
-                + path), new TypeReference<LinkedList<Movie>>() {
+        movies = mapper.readValue(file, new TypeReference<LinkedList<Movie>>() {
         });
-
-        int elId = 0;
-
+        int elementId = 0;
         for (Movie mov: movies){
-            elId = mov.getId();
+            elementId = mov.getId();
         }
-
-        collectionManager.SetMoviesInCollection(movies);
-
-        collectionManager.setElementId(elId);
-
+        collectionManager.SetMoviesCollection(movies);
+        collectionManager.setElementId(elementId);
+        collectionManager.setPath(path);
     }
 
 
-    public void serializeCollection(String fileName) throws JsonProcessingException {
+    public void serializeCollection(LinkedList<Movie> movies, String fileName) throws JsonProcessingException {
         ObjectMapper mapper = new XmlMapper();
+        collectionManager = CollectionManager.getInstance();
+        String path = collectionManager.getPath();
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-
-        CollectionManager collectionManager = new CollectionManager();
-
+        collectionManager = CollectionManager.getInstance();
         String jsonStr;
-
         mapper.findAndRegisterModules();
-
-        movies = collectionManager.getMoviesCollection();
-
         jsonStr = mapper.writeValueAsString(movies);
-
-
         try {
-
-            FileWriter writer = new FileWriter("src/data/"
-                    + fileName);
+            FileWriter writer = new FileWriter(
+                    path);
             writer.write(jsonStr);
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+    public String getPath(){
+        return path;
+    }
+
+    public void setPath(String path){
+        XmlParser.path = path;
+    }
+
 }

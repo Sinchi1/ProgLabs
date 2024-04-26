@@ -1,7 +1,9 @@
 package Collections;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
+/**
+ * A class that is part of the collection
+ */
 public class Location {
     @JacksonXmlProperty(localName = "x")
     private Float x; //Поле не может быть null

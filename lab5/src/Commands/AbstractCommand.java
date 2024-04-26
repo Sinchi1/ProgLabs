@@ -1,5 +1,8 @@
 package Commands;
 
+/**
+ * Abstract class for all Commands
+ */
 public abstract class AbstractCommand implements InterCommand {
 
     private final String name;
