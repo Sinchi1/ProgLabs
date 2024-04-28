@@ -38,8 +38,17 @@ public class ProgramRunner {
     public void run(String path) throws IOException {
         boolean isFirstCom = true;
         boolean flagSearch = false;
+        Thread thread = new Thread(() -> {
+            System.out.println("\nЗавершение работы по другой причине");
+            try {
+                CollectionManager collectionManager = CollectionManager.getInstance();
+                collectionManager.saveCollection();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Runtime.getRuntime().addShutdownHook(thread);
         Scanner scan = new Scanner(System.in);
-
         try {
             xmlParser.deserializeCollection(path);
         } catch (IOException e) {
@@ -71,39 +80,29 @@ public class ProgramRunner {
                     ConsolePrinter.messageToConsole("Неожиданное сочетание клавиш!");
                     return;
                 }
-            } while (!flagSearch);
+            }
+            while (!flagSearch);
         }
         while (true) {
-            programmStateManager = ProgrammStateManager.getInstance();
+            programmStateManager =  ProgrammStateManager.getInstance();
             if (programmStateManager.getProgrammState() == ProgrammState.PROGRAMM_STATE_PASSIVE){
                 ConsolePrinter.messageToConsole("Скрипт Выполнен!");
             }
             programmStateManager.setProgrammState(ProgrammState.PROGRAMM_STATE_ACTIVE);
             try {
-//                Thread.sleep(1);
-                Signal.handle(new Signal("INT"),  // SIGINT
-                        signal -> ConsolePrinter.messageToConsole("Введена запрещённая комбинация клавиш! Файл сохранится, а программа " + "завершит свою работу!"));
-                        path = xmlParser.getPath();
-                        xmlParser.deserializeCollection(path);
                 if (!isFirstCom) {
                     ConsolePrinter.messageToConsoleWithoutLn("Ваша команда:");
-                    String line;
+                    String line = null;
                     try {
-//                        Thread.sleep(1);
+                        Thread.sleep(1);
                         line = scan.nextLine().trim();
-//                        String finalLine = line;
-//                        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-//                            if (!finalLine.toUpperCase().equals("EXIT")){
-//                                System.out.println("Нигга гпей");
-//                            }
-//                        }));
-                    } catch (NoSuchElementException e) {
-                        xmlParser.deserializeCollection(path);
-                        return;
+                    } catch (NoSuchElementException | InterruptedException ignored) {
+                        thread.interrupt();
+                        System.exit(1);
                     }
-//                    catch (InterruptedException e ){
-//
-//                    }
+                    if (line.equalsIgnoreCase("exit")){
+                        Runtime.getRuntime().removeShutdownHook(thread);
+                    }
                     String[] parts = line.split("\\s+", 2);
                     String commName = parts[0].toLowerCase();
                     if (commandManager.isCommandExists(commName)) {
@@ -125,7 +124,8 @@ public class ProgramRunner {
                         ConsolePrinter.messageToConsole("К сожалению, введённой команды не существует!");
                     }
                 } else {
-                    ConsolePrinter.messageToConsole("Для использования программы нужно знать команды, чтобы ознакомиться с ними" + " введите команду help.\nЕсли же вы их знаете в добрый путь!");
+                    ConsolePrinter.messageToConsole("Для использования программы нужно знать команды, чтобы ознакомиться с ними" +
+                            " введите команду help.\nЕсли же вы их знаете в добрый путь!");
                     isFirstCom = false;
                 }
             } catch (RunnerException e) {
@@ -133,12 +133,9 @@ public class ProgramRunner {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-//            catch (InterruptedException ignored) {
-//                Thread.currentThread().interrupt();
-//            }
-
         }
     }
+
     HashSet<String> corrector = new HashSet<>();
     public void runOnce(String args) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("src/data/" + args));

@@ -42,6 +42,7 @@ public class UpdateIdCommand extends AbstractCommand {
             mov1.setId(id);
             mov1.setName(filmName);
             collectionManager.replaceMovieInCollectionById(id, mov1);
+            ConsolePrinter.messageToConsole("Элемент коллекции по id: "+args + " успешно обновлён!");
         }
         catch (NullPointerException ignored){
         }

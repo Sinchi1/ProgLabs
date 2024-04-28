@@ -121,7 +121,7 @@ public class MovieReader {
                 } catch (InputMismatchException ignored) {
                     ConsolePrinter.messageToConsole("Неправильный тип данных");
                 }
-            } while (true);
+            }while (true) ;
             cor = new Coordinates(intX, intY);
             // Дата создания
             creationDate1 = ZonedDateTime.now();
@@ -249,7 +249,11 @@ public class MovieReader {
             Location location = new Location(x, y, z, name);
             operator = new Person(PersonName, height, col, hairCol, country, location);
             return new Movie(id, args, cor, creationDate1, oscarCount, goldenPalmCount, length, genre, operator);
-        } catch (NoSuchElementException ignored) {
+        } catch (NoSuchElementException e) {
+            ConsolePrinter.messageToConsole("Введена запрещённая комбинация клавиш! Файл сохранится, а программа " +
+                    "завершит свою работу!");
+            collectionManager = CollectionManager.getInstance();
+            collectionManager.saveCollection();
         }
         return new Movie(id, args, cor, creationDate1, oscarCount, goldenPalmCount, length, genre, operator);
     }

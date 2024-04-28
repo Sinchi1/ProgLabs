@@ -11,7 +11,7 @@ public class Main {
 public static void main(String[] args) throws IOException {
     ProgramRunner runner = new ProgramRunner();
     runner.cmdAdd();
-//    runner.run(args[0]);
-     runner.run(Arrays.toString(args));
+    runner.run(args[0]);
+//     runner.run(Arrays.toString(args));
     }
 }

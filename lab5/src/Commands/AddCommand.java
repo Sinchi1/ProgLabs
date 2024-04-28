@@ -18,11 +18,9 @@ public class AddCommand extends AbstractCommand {
     }
     CollectionManager collectionManager;
 
-
     MovieReader reader = new MovieReader();
 
     ProgrammStateManager programmStateManager = ProgrammStateManager.getInstance();
-
     /**
      * The method that admitting to user new files of collection
      * @return void
@@ -35,6 +33,7 @@ public class AddCommand extends AbstractCommand {
             mov1 = reader.readMovie(args);
         }
         else{mov1 = reader.readMovieFromFile(args);}
+        System.out.println(mov1);
         collectionManager.putMovieInCollection(mov1);
         ConsolePrinter.messageToConsole("Вы успешно создали элемент коллекции!");
     }

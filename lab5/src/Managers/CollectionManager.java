@@ -21,20 +21,28 @@ public class CollectionManager {
 
     private CollectionManager(){}
 
-    public static CollectionManager getInstance(){
-        if(instance == null){
-            instance = new CollectionManager();
+    public static CollectionManager getInstance() {
+        CollectionManager localInstance = instance;
+        if (localInstance == null) {
+            synchronized (CollectionManager.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new CollectionManager();
+                }
+            }
         }
-        return instance;
+        return localInstance;
     }
-
-    private LinkedList<Movie> moviesCollection =  new LinkedList<>();
+    public   LinkedList<Movie> moviesCollection = new LinkedList<>();
 
     private int elementId;
 
+
+    // Всё взаимодействие с коллекцией только внутри Манагера!!!
     private LinkedList<Movie> getMoviesCollection() {
         return moviesCollection;
     }
+
     public void SetMoviesCollection(LinkedList<Movie> mov) {
         moviesCollection = mov;
     }
@@ -45,10 +53,7 @@ public class CollectionManager {
         return elementId;
     }
     public void putMovieInCollection(Movie mov){
-        System.out.println(moviesCollection.size());
         moviesCollection.add(mov);
-        System.out.println(moviesCollection.size());
-        System.out.println( "" + moviesCollection.hashCode());
     }
 
     public ZonedDateTime getCreationDate(){
@@ -208,7 +213,7 @@ public class CollectionManager {
      */
     public void showAllElements(){
         if (moviesCollection.isEmpty()) {
-            ConsolePrinter.messageToConsole("Дорогой пользователь, Коллекция пуста!" + moviesCollection.hashCode());
+            ConsolePrinter.messageToConsole("Дорогой пользователь, Коллекция пуста!");
         } else {
             for (Movie movie :  moviesCollection) {
                 ConsolePrinter.messageToConsole("Название Фильма:  " + movie.getName() +"\nid Фильма:  " + movie.getId()
