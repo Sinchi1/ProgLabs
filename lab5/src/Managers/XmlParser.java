@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -43,7 +44,7 @@ public class XmlParser {
     }
 
 
-    public void serializeCollection(LinkedList<Movie> movies, String fileName) throws JsonProcessingException {
+    public String serializeCollection(LinkedList<Movie> movies, String fileName) throws JsonProcessingException {
         ObjectMapper mapper = new XmlMapper();
         collectionManager = CollectionManager.getInstance();
         String path = collectionManager.getPath();
@@ -59,7 +60,10 @@ public class XmlParser {
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException ignored){
+            return ("Файл не может быть сохранен");
         }
+        return "Файл успешно сохранен!";
     }
 
     public String getPath(){

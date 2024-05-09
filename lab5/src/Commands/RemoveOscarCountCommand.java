@@ -25,7 +25,7 @@ public class RemoveOscarCountCommand extends AbstractCommand {
     @Override
     public void execute(String args) {
         collectionManager = CollectionManager.getInstance();
-        ConsolePrinter.messageToConsole(collectionManager.removeOscar(args).toString());
+        ConsolePrinter.messageToConsole(collectionManager.removeOscar(args).toString().replaceAll("^\\[|\\]$", ""));
     }
 
 }

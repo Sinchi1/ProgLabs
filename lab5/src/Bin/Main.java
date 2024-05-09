@@ -1,8 +1,12 @@
 package Bin;
+import Collections.Coordinates;
+import Managers.ConsolePrinter;
 import Managers.ProgramRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 public class Main {
     /**
@@ -11,7 +15,11 @@ public class Main {
 public static void main(String[] args) throws IOException {
     ProgramRunner runner = new ProgramRunner();
     runner.cmdAdd();
-    runner.run(args[0]);
-//     runner.run(Arrays.toString(args));
+    ConsolePrinter consolePrinter = new ConsolePrinter();
+    try {
+        runner.run(args[0]);
+    } catch (ArrayIndexOutOfBoundsException e) {
+        ConsolePrinter.messageToConsole("Вы не ввели название файла!");
     }
+}
 }

@@ -33,7 +33,6 @@ public class AddCommand extends AbstractCommand {
             mov1 = reader.readMovie(args);
         }
         else{mov1 = reader.readMovieFromFile(args);}
-        System.out.println(mov1);
         collectionManager.putMovieInCollection(mov1);
         ConsolePrinter.messageToConsole("Вы успешно создали элемент коллекции!");
     }

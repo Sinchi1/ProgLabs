@@ -1,6 +1,7 @@
 package Managers;
 
 
+import java.io.FileNotFoundException;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -11,8 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  * The class that works with collection
  */
 public class CollectionManager {
-//    ConsolePrinter consolePrinter = new ConsolePrinter();
-//    CommandManager commandManager = new CommandManager();
 
     String path;
     public ZonedDateTime creationDate = ZonedDateTime.now();
@@ -82,7 +81,13 @@ public class CollectionManager {
         if (moviesCollection.isEmpty()) {
             return ("Дорогой пользователь, коллекция пуста => первого элемента не существует");
         } else {
-            return("Первый элемент коллекции: " + moviesCollection.get(0).getName());
+            Movie movie = moviesCollection.get(0);
+            return("Первый элемент коллекции: " + "Название Фильма:  " + movie.getName() +"\nid Фильма:  " + movie.getId()
+                    + " Координата X: " + movie.getCoordinates().getX() + " Координата Y: " + movie.getCoordinates().getY() + " Количество Оскаров: " + movie.getOscarsCount()
+                    + " Количество Золотых пальм: " + movie.getGoldenPalmCount() + " Длина фильма: " + movie.getLength()
+                    + " Жанр: " + movie.getGenre().toString() + " Страна: " + movie.getOperator().getLocation().getName()
+                    + " Имя режиссёра: " + movie.getOperator().getName() +"\nЦвет глаз режиссёра: " + movie.getOperator().getEyeColor().toString()
+                    + " Рост режиссёра: "+ movie.getOperator().getHeight());
         }
     }
     /**
@@ -239,10 +244,9 @@ public class CollectionManager {
      * The method that saving collection to file
      * @return String
      */
-    public void saveCollection() throws JsonProcessingException {
+    public String saveCollection() throws JsonProcessingException {
         XmlParser xmlParser = new XmlParser();
-        xmlParser.serializeCollection(moviesCollection, path);
-        ConsolePrinter.messageToConsole("Файл сохранён!");
+        return xmlParser.serializeCollection(moviesCollection, path);
     }
 
 }

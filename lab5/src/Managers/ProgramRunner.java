@@ -39,15 +39,14 @@ public class ProgramRunner {
         boolean isFirstCom = true;
         boolean flagSearch = false;
         Thread thread = new Thread(() -> {
-            System.out.println("\nЗавершение работы по другой причине");
+            System.out.println("\nВыход из программы");
             try {
                 CollectionManager collectionManager = CollectionManager.getInstance();
-                collectionManager.saveCollection();
+                ConsolePrinter.messageToConsole(collectionManager.saveCollection());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
-        Runtime.getRuntime().addShutdownHook(thread);
         Scanner scan = new Scanner(System.in);
         try {
             xmlParser.deserializeCollection(path);
@@ -59,7 +58,7 @@ public class ProgramRunner {
                     xmlParser.deserializeCollection(path);
                     flagSearch = true;
                 } catch (IOException b) {
-                    if (file.exists()) {
+                    if (file.exists() && file.canRead() && file.canWrite()) {
                         System.out.println("Файл не валиден и будет очищен");
                         FileWriter writer = new FileWriter(path);
                         writer.write("<LinkedList></LinkedList>");
@@ -75,6 +74,15 @@ public class ProgramRunner {
                         writer.close();
                         xmlParser.deserializeCollection(path);
                         break;
+                    } else if (file.exists() && !file.canRead() && !file.canWrite()) {
+                        ConsolePrinter.messageToConsole("Файл по пути " + path + "  не обладает правами записи и чтения, введите другой файл");
+                        break;
+                    } else if (file.exists() && !file.canRead()) {
+                        ConsolePrinter.messageToConsole("Файл по пути " + path + " нельзя прочесть, введите другой файл");
+                        break;
+                    } else if (file.exists()  && !file.canWrite()) {
+                        ConsolePrinter.messageToConsole("Файл по пути " + path + "  не обладает правами записи, введите другой файл");
+                        break;
                     }
                 } catch (NoSuchElementException b) {
                     ConsolePrinter.messageToConsole("Неожиданное сочетание клавиш!");
@@ -83,6 +91,7 @@ public class ProgramRunner {
             }
             while (!flagSearch);
         }
+        Runtime.getRuntime().addShutdownHook(thread);
         while (true) {
             programmStateManager =  ProgrammStateManager.getInstance();
             if (programmStateManager.getProgrammState() == ProgrammState.PROGRAMM_STATE_PASSIVE){
@@ -138,7 +147,13 @@ public class ProgramRunner {
 
     HashSet<String> corrector = new HashSet<>();
     public void runOnce(String args) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("src/data/" + args));
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(args));
+        } catch (FileNotFoundException e) {
+            ConsolePrinter.messageToConsole("Такого файла скрипта не существует!");
+            return;
+        }
         ScriptName = args;
         programmStateManager = ProgrammStateManager.getInstance();
         programmStateManager.setProgrammState(ProgrammState.PROGRAMM_STATE_PASSIVE);

@@ -20,6 +20,6 @@ public class SaveCommand extends AbstractCommand {
     @Override
     public void execute(String args) throws JsonProcessingException {
         collectionManager = CollectionManager.getInstance();
-        collectionManager.saveCollection();
+        ConsolePrinter.messageToConsole(collectionManager.saveCollection());
     }
 }

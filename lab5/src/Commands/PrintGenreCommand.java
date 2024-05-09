@@ -24,6 +24,6 @@ public class PrintGenreCommand extends AbstractCommand  {
     @Override
     public void execute(String args) {
         collectionManager = CollectionManager.getInstance();
-        ConsolePrinter.messageToConsole(collectionManager.getCollectionGenres().toString());
+        ConsolePrinter.messageToConsole(collectionManager.getCollectionGenres().toString().replaceAll("^\\[|\\]$", ""));
     }
 }

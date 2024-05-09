@@ -56,7 +56,7 @@ public class MovieReader {
      */
     public Movie readMovieFromFile(String args) throws IOException {
         collectionManager = CollectionManager.getInstance();
-        BufferedReader reader = new BufferedReader(new FileReader("src/data/"+ programRunner.getScriptName()));
+        BufferedReader reader = new BufferedReader(new FileReader(programRunner.getScriptName()));
         int id = collectionManager.getElementId() + 1;
         collectionManager.setElementId(id);
         reader.readLine();
@@ -187,7 +187,7 @@ public class MovieReader {
                 try {
                     height = reader.readDouble("Рост (double, >60)");
                     if (doubleCheck.checkDouble(height, 60, true)) {
-                        ConsolePrinter.messageToConsole("Вы ввели число большее 60");
+                        ConsolePrinter.messageToConsole("Вы ввели число меньшее 60");
                         continue;
                     }
                     break;

@@ -24,7 +24,7 @@ public class RemoveLowerCommand extends AbstractCommand {
     @Override
     public void execute(String args) {
     collectionManager = CollectionManager.getInstance();
-    ConsolePrinter.messageToConsole(collectionManager.removeLower(args).toString());
+    ConsolePrinter.messageToConsole(collectionManager.removeLower(args).toString().replaceAll("^\\[|\\]$", ""));
     }
 
 

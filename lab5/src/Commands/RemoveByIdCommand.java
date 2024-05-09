@@ -24,6 +24,6 @@ public class RemoveByIdCommand extends AbstractCommand {
     @Override
     public void execute(String args) {
         collectionManager = CollectionManager.getInstance();
-        ConsolePrinter.messageToConsole(collectionManager.removeById(args).toString());
+        ConsolePrinter.messageToConsole(collectionManager.removeById(args).toString().replaceAll("^\\[|\\]$", ""));
     }
 }
